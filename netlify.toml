@@ -1,0 +1,30 @@
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[redirects]]
+  from = "/brief"
+  to = "/brief.html"
+  status = 200
+
+[[redirects]]
+  from = "/article"
+  to = "/article.html"
+  status = 200
+
+[[redirects]]
+  from = "/policy-watch"
+  to = "/policy-watch.html"
+  status = 200
+
+[[redirects]]
+  from = "/take-action"
+  to = "/take-action.html"
+  status = 200

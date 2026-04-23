@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="VoxPopulAI — AI news explained in plain language. What the AI deluge means for your work, your rights, and your voice.">
+  <title>VoxPopulAI — Voice of the People in the AI Age</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230F1923'/><text y='24' x='4' font-size='18' fill='%23EF9F27' font-family='sans-serif'>AI</text></svg>">
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <a href="index.html" class="nav__logo" aria-label="VoxPopulAI home">
+    VOX POPUL<span class="nav__logo-ai">AI</span>
+  </a>
+  <ul class="nav__links" role="list">
+    <li><a href="brief.html">The Brief</a></li>
+    <li><a href="#understand">Understand</a></li>
+    <li><a href="#impact">Your Impact</a></li>
+    <li><a href="take-action.html">Take Action</a></li>
+    <li><a href="policy-watch.html">Policy Watch</a></li>
+    <li><a href="#community">Community</a></li>
+  </ul>
+  <div class="nav__right">
+    <button class="btn--donate" data-donate-open aria-label="Donate to VoxPopulAI">Donate</button>
+    <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="nav__mobile-menu" role="navigation" aria-label="Mobile navigation">
+  <a href="brief.html">The Brief</a>
+  <a href="#understand">Understand</a>
+  <a href="#impact">Your Impact</a>
+  <a href="take-action.html">Take Action</a>
+  <a href="policy-watch.html">Policy Watch</a>
+  <a href="#community">Community</a>
+  <a href="#" class="donate-link" data-donate-open>Donate — $1 · $3 · $5</a>
+</div>
+
+<!-- ── Donate Modal ── -->
+<div id="donate-overlay" class="donate-overlay" role="dialog" aria-modal="true" aria-label="Donate to VoxPopulAI">
+  <div class="donate-modal">
+    <div id="donate-form-content">
+      <div class="donate-modal__header">
+        <div>
+          <div class="donate-modal__title">Support VoxPopulAI</div>
+          <div class="donate-modal__subtitle">Independent AI journalism.<br>No corporate funders. No ads. Just you.</div>
+        </div>
+        <button class="donate-modal__close" data-donate-close aria-label="Close donate dialog">×</button>
+      </div>
+      <div class="donate-freq">
+        <button class="donate-freq__btn" data-freq="once">One time</button>
+        <button class="donate-freq__btn" data-freq="monthly">Monthly</button>
+      </div>
+      <div class="donate-amounts">
+        <button class="donate-amt" data-amount="1">$1</button>
+        <button class="donate-amt" data-amount="3">$3</button>
+        <button class="donate-amt" data-amount="5">$5</button>
+      </div>
+      <div class="donate-custom">
+        <span class="donate-custom__prefix">$</span>
+        <input id="donate-custom-input" type="number" min="1" placeholder="Other amount" aria-label="Custom donation amount">
+      </div>
+      <div class="donate-impact" id="donate-impact-msg">$3 covers one day of The Brief for 12 readers.</div>
+      <button class="donate-confirm" id="donate-confirm">Donate $3 →</button>
+      <div class="donate-legal">VoxPopulAI is a 501(c)(3) nonprofit. Your contribution is tax-deductible. Processed securely via Stripe.</div>
+    </div>
+    <div id="donate-thanks" class="donate-thanks" style="display:none">
+      <div class="donate-thanks__icon">✓</div>
+      <div class="donate-thanks__title">Thank you.</div>
+      <div class="donate-thanks__msg">Your support keeps VoxPopulAI independent and free for everyone. A receipt is on its way to your email.</div>
+      <button class="btn btn--amber btn--full" data-donate-close>Back to VoxPopulAI</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Hero ── -->
+<header class="hero" role="banner">
+  <div class="container">
+    <div class="hero__logo" aria-label="Vox PopulAI">
+      VOX POPUL<span class="hero__logo-ai">AI</span>
+    </div>
+    <h1 class="hero__headline">AI is reshaping everything. Here's what it means for you.</h1>
+    <p class="hero__sub">Plain-language explainers, policy tracking, and advocacy tools — so you can understand and shape the AI age.</p>
+    <div class="hero__actions">
+      <a href="brief.html" class="btn btn--amber">Read today's brief</a>
+      <a href="#newsletter" class="btn btn--outline">Get the daily email</a>
+    </div>
+    <p class="hero__footnote">
+      VoxPopulAI is a reader-supported nonprofit. No corporate AI funders. No ads.
+      If this work matters to you, <a href="#" data-donate-open>consider a small donation →</a>
+    </p>
+  </div>
+</header>
+
+<!-- ── Metrics Strip ── -->
+<section class="metrics" aria-label="AI impact statistics">
+  <div class="container">
+    <p class="metrics__label">Why this matters — the scale of AI's impact</p>
+    <div class="metrics__grid">
+      <div class="metric">
+        <div class="metric__number">300M</div>
+        <div class="metric__desc">jobs globally could be disrupted or displaced by AI</div>
+        <div class="metric__source">Goldman Sachs, 2023</div>
+      </div>
+      <div class="metric">
+        <div class="metric__number">19%</div>
+        <div class="metric__desc">of US workers are in jobs highly exposed to AI automation</div>
+        <div class="metric__source">Pew Research, 2023</div>
+      </div>
+      <div class="metric">
+        <div class="metric__number">60%</div>
+        <div class="metric__desc">of jobs have significant tasks that AI tools can already perform</div>
+        <div class="metric__source">McKinsey Global Institute, 2023</div>
+      </div>
+      <div class="metric">
+        <div class="metric__number">700+</div>
+        <div class="metric__desc">AI-related bills introduced across US federal and state legislatures</div>
+        <div class="metric__source">NCSL / Congress.gov, 2024</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Today's Brief ── -->
+<section class="section section--surface" id="brief" aria-label="Today's brief">
+  <div class="container">
+    <div class="section__header">
+      <h2 class="section__title">Today's brief <span style="font-size:14px;font-weight:400;color:var(--color-text-faint);font-family:var(--font-sans)">— April 23, 2026</span></h2>
+      <span class="section__meta">3 stories · 5 min</span>
+    </div>
+
+    <article class="card mb-8" aria-label="AI hiring story">
+      <div class="card__meta">
+        <span class="badge badge--amber">At work</span>
+        <span class="card__read-time">2 min</span>
+      </div>
+      <h3 class="card__headline"><a href="article.html">AI hiring tools are quietly rejecting your resume before a human ever sees it</a></h3>
+      <p class="card__means">What this means: You may have the right to request a human review — here's exactly how to ask.</p>
+    </article>
+
+    <article class="card mb-8" aria-label="EU AI Act story">
+      <div class="card__meta">
+        <span class="badge badge--teal">Policy</span>
+        <span class="card__read-time">3 min</span>
+      </div>
+      <h3 class="card__headline"><a href="article.html">The EU AI Act is now fully in force — and US lawmakers are taking notes</a></h3>
+      <p class="card__means">What this means: New transparency rights could extend to US workers within two years.</p>
+    </article>
+
+    <article class="card" aria-label="Workplace AI monitoring story">
+      <div class="card__meta">
+        <span class="badge badge--purple">Your data</span>
+        <span class="card__read-time">2 min</span>
+      </div>
+      <h3 class="card__headline"><a href="article.html">New workplace AI tools let employers see how you use AI at your desk</a></h3>
+      <p class="card__means">What this means: Learn what your employer can see — and what's still protected.</p>
+    </article>
+
+    <div class="action-bar" role="complementary" aria-label="Today's action">
+      <span class="action-bar__label">Action today</span>
+      <div class="action-bar__divider"></div>
+      <span class="action-bar__text">Contact your rep about the AI in Hiring Transparency Act</span>
+      <a href="take-action.html" class="action-bar__cta">Use our template →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── What You'll Find Here ── -->
+<section class="section section--white" id="understand" aria-label="Site pillars">
+  <div class="container">
+    <h2 class="section__title mb-16">What you'll find here</h2>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar__bar"></div>
+        <h3 class="pillar__title">Understand</h3>
+        <p class="pillar__desc">AI news translated out of jargon — what happened, why it matters, and who's affected. Every story in plain language.</p>
+      </div>
+      <div class="pillar" id="impact">
+        <div class="pillar__bar"></div>
+        <h3 class="pillar__title">Your impact</h3>
+        <p class="pillar__desc">How AI changes your work, your data, your rights, and your daily life — tailored to your industry and location.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar__bar"></div>
+        <h3 class="pillar__title">Take action</h3>
+        <p class="pillar__desc">Contact your representatives, join coalitions, and use our advocacy templates to make your voice heard in the AI age.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Policy Watch Teaser ── -->
+<section class="section section--surface" aria-label="Policy watch preview">
+  <div class="container">
+    <div class="section__header">
+      <h2 class="section__title">Policy watch</h2>
+      <a href="policy-watch.html" class="section__link">View all 14 tracked bills →</a>
+    </div>
+    <div class="card mb-8">
+      <div class="card__meta">
+        <span class="badge badge--amber">Active</span>
+        <span class="card__read-time">Senate committee</span>
+      </div>
+      <h3 class="card__headline">AI in Hiring Transparency Act</h3>
+      <p class="card__means">Would require employers to disclose AI use in hiring decisions and give applicants the right to request human review. Co-sponsors needed.</p>
+    </div>
+    <div class="card">
+      <div class="card__meta">
+        <span class="badge badge--blue">7 of 12 active</span>
+        <span class="card__read-time">EO tracker</span>
+      </div>
+      <h3 class="card__headline">Executive Order on AI Safety — implementation tracker</h3>
+      <p class="card__means">Requires safety testing of frontier AI models, watermarking of AI content, and sector-specific agency guidance.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Community ── -->
+<section class="section section--white" id="community" aria-label="Community voices">
+  <div class="container">
+    <h2 class="section__title mb-8">Community voices</h2>
+    <p style="font-size:14px;color:var(--color-text-muted);margin-bottom:20px;line-height:1.7">Real experiences from workers, job seekers, and citizens navigating the AI age — reviewed, verified, and published to help others understand what AI looks like in real life.</p>
+    <div style="display:grid;grid-template-columns:1fr;gap:12px">
+      <blockquote style="background:var(--color-surface);border-radius:var(--radius-md);padding:18px;border-left:3px solid var(--color-amber);border-radius:0 var(--radius-md) var(--radius-md) 0">
+        <p style="font-family:var(--font-serif);font-size:14px;color:var(--color-text);line-height:1.7;margin-bottom:10px">"I applied to 40 jobs with the same qualifications. Only after I reformatted my resume to match what AI screeners look for did I start getting callbacks. Same experience, same skills — just different formatting."</p>
+        <footer style="font-size:11px;color:var(--color-text-faint)">— Healthcare worker, Ohio · <span class="badge badge--teal" style="font-size:9px">Community verified</span></footer>
+      </blockquote>
+      <blockquote style="background:var(--color-surface);border-radius:var(--radius-md);padding:18px;border-left:3px solid var(--color-amber);border-radius:0 var(--radius-md) var(--radius-md) 0">
+        <p style="font-family:var(--font-serif);font-size:14px;color:var(--color-text);line-height:1.7;margin-bottom:10px">"My employer deployed an AI tool that scores our customer calls in real time. It flags phrases and docks our performance metrics without any human review. We were never told."</p>
+        <footer style="font-size:11px;color:var(--color-text-faint)">— Call center representative, Texas · <span class="badge badge--teal" style="font-size:9px">Community verified</span></footer>
+      </blockquote>
+    </div>
+    <div style="margin-top:16px">
+      <a href="take-action.html#story" class="btn btn--ghost">Share your own experience →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Newsletter ── -->
+<section class="newsletter" id="newsletter" aria-label="Newsletter signup">
+  <div class="container">
+    <h2 class="newsletter__title">Get the Brief every morning</h2>
+    <p class="newsletter__sub">5 minutes. Plain language. What AI means for you — today.</p>
+    <form class="newsletter__form" action="#" method="post" aria-label="Email signup form">
+      <input class="newsletter__input" type="email" name="email" placeholder="your@email.com" required aria-label="Your email address">
+      <button type="submit" class="btn btn--amber">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer class="footer" role="contentinfo">
+  <span class="footer__note">voxpopulai.org — nonprofit · independent · no AI corporate funding</span>
+  <nav class="footer__links" aria-label="Footer navigation">
+    <a href="about.html">About</a>
+    <a href="editorial-policy.html">Editorial policy</a>
+    <a href="how-we-source.html">How we source</a>
+    <a href="corrections.html">Corrections</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

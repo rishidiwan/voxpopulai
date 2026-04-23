@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Policy Watch — VoxPopulAI</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230F1923'/><text y='24' x='4' font-size='18' fill='%23EF9F27' font-family='sans-serif'>AI</text></svg>">
+</head>
+<body>
+<nav class="nav">
+  <a href="index.html" class="nav__logo">VOX POPUL<span class="nav__logo-ai">AI</span></a>
+  <ul class="nav__links">
+    <li><a href="brief.html">The Brief</a></li>
+    <li><a href="index.html#understand">Understand</a></li>
+    <li><a href="index.html#impact">Your Impact</a></li>
+    <li><a href="take-action.html">Take Action</a></li>
+    <li><a href="policy-watch.html" class="active">Policy Watch</a></li>
+    <li><a href="index.html#community">Community</a></li>
+  </ul>
+  <div class="nav__right">
+    <button class="btn--donate" data-donate-open>Donate</button>
+    <button class="nav__hamburger" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="nav__mobile-menu">
+  <a href="brief.html">The Brief</a>
+  <a href="index.html#understand">Understand</a>
+  <a href="index.html#impact">Your Impact</a>
+  <a href="take-action.html">Take Action</a>
+  <a href="policy-watch.html">Policy Watch</a>
+  <a href="index.html#community">Community</a>
+  <a href="#" class="donate-link" data-donate-open>Donate — $1 · $3 · $5</a>
+</div>
+<div id="donate-overlay" class="donate-overlay">
+  <div class="donate-modal">
+    <div id="donate-form-content">
+      <div class="donate-modal__header">
+        <div><div class="donate-modal__title">Support VoxPopulAI</div><div class="donate-modal__subtitle">Independent AI journalism. No corporate funders. No ads.</div></div>
+        <button class="donate-modal__close" data-donate-close>×</button>
+      </div>
+      <div class="donate-freq">
+        <button class="donate-freq__btn" data-freq="once">One time</button>
+        <button class="donate-freq__btn" data-freq="monthly">Monthly</button>
+      </div>
+      <div class="donate-amounts">
+        <button class="donate-amt" data-amount="1">$1</button>
+        <button class="donate-amt" data-amount="3">$3</button>
+        <button class="donate-amt" data-amount="5">$5</button>
+      </div>
+      <div class="donate-custom"><span class="donate-custom__prefix">$</span><input id="donate-custom-input" type="number" min="1" placeholder="Other amount"></div>
+      <div class="donate-impact" id="donate-impact-msg">$3 covers one day of The Brief for 12 readers.</div>
+      <button class="donate-confirm" id="donate-confirm">Donate $3 →</button>
+      <div class="donate-legal">501(c)(3) nonprofit. Tax-deductible. Processed via Stripe.</div>
+    </div>
+    <div id="donate-thanks" class="donate-thanks" style="display:none">
+      <div class="donate-thanks__icon">✓</div>
+      <div class="donate-thanks__title">Thank you.</div>
+      <div class="donate-thanks__msg">Your support keeps VoxPopulAI free for everyone.</div>
+      <button class="btn btn--amber btn--full" data-donate-close>Back to VoxPopulAI</button>
+    </div>
+  </div>
+</div>
+
+<section class="section--dark">
+  <div class="container">
+    <span class="badge badge--amber">Policy Watch</span>
+    <h1 class="headline--serif">Tracking AI legislation from global to your city council</h1>
+    <div class="stats-row">
+      <div class="stat-item">
+        <div class="stat-item__number">14</div>
+        <div class="stat-item__label">Federal bills</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-item__number">47</div>
+        <div class="stat-item__label">State bills</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-item__number">12</div>
+        <div class="stat-item__label">Local ordinances</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-item__number">6</div>
+        <div class="stat-item__label">Global frameworks</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="location-bar">
+  <div class="location-bar__default">
+    <div class="location-bar__title">Filter state & local policies to your location</div>
+    <div class="location-bar__sub">Saved to your browser — we don't track you</div>
+    <div style="display: flex; gap: 10px; align-items: center; margin-top: 12px;">
+      <button id="detect-location-btn" class="btn btn--amber btn--sm">Detect my location</button>
+      <select class="location-select">
+        <option value="">Select state…</option>
+        <option value="CA">California</option>
+        <option value="CO">Colorado</option>
+        <option value="IL">Illinois</option>
+        <option value="NY">New York</option>
+        <option value="TX">Texas</option>
+        <option value="WA">Washington</option>
+      </select>
+    </div>
+  </div>
+  <div class="location-bar__set" style="display: none;">
+    <div style="display: flex; gap: 8px; align-items: center;">
+      <span style="font-size: 20px;">📍</span>
+      <span>Showing: <span id="location-label"></span></span>
+      <span class="badge badge--teal" style="margin-left: 8px;">Saved</span>
+      <button id="clear-location-btn" class="btn btn--ghost btn--sm" style="margin-left: auto;">Change</button>
+    </div>
+  </div>
+</div>
+
+<section class="section--surface">
+  <div class="container">
+    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+      <button class="filter-pill" data-filter-group="status" data-filter-value="">All</button>
+      <button class="filter-pill" data-filter-group="status" data-filter-value="active">Active</button>
+      <button class="filter-pill" data-filter-group="status" data-filter-value="in force">In force</button>
+      <button class="filter-pill" data-filter-group="status" data-filter-value="passed">Passed</button>
+      <button class="filter-pill" data-filter-group="status" data-filter-value="pending">Pending</button>
+    </div>
+  </div>
+</section>
+
+<section class="section--white">
+  <div class="container">
+    <div class="tier-header--global">
+      <h2 class="tier-header__title">Global Frameworks</h2>
+      <p class="tier-header__description">International agreements shaping AI governance worldwide</p>
+    </div>
+    <div class="tier-content">
+      <div class="bill bill--global" data-status="in force" data-filter-target="status">
+        <div class="bill__header">
+          <div style="flex:1">
+            <span class="badge badge--teal">In force</span>
+            <div class="bill__title">EU AI Act</div>
+          </div>
+          <button class="bill__expand">+ Details</button>
+        </div>
+        <div class="bill__desc">The world's first comprehensive AI regulation, classifying systems by risk and requiring impact assessments for high-risk applications.</div>
+        <div class="bill__details">Effective August 2024. The EU AI Act is the world's first binding legal framework for AI. It categorizes AI by risk level and requires high-risk systems (used in employment, law enforcement, education) to undergo pre-deployment impact assessments and post-deployment monitoring. <strong>Global impact:</strong> Companies worldwide are adopting compliance standards modeled on the EU AI Act even outside Europe.<br><br><a href="take-action.html" class="btn btn--ghost btn--sm" style="margin-top:8px">Take Action on this bill →</a></div>
+      </div>
+      <div class="bill bill--global" data-status="adopted" data-filter-target="status">
+        <div class="bill__header">
+          <div style="flex:1">
+            <span class="badge badge--green">Adopted</span>
+            <div class="bill__title">OECD AI Principles</div>
+          </div>
+          <button class="bill__expand">+ Details</button>
+        </div>
+        <div class="bill__desc">Consensus framework adopted by 42 nations committing to responsible AI development and use across member countries.</div>
+        <div class="bill__details">Adopted May 2019, updated 2023. The OECD AI Principles establish five core values: AI should benefit people and the planet, be human-centered, be transparent and explainable, be robust and secure, and be accountable. The framework is non-binding but widely referenced by governments setting national AI policy. <strong>Impact:</strong> Governments including the US, EU, UK, Canada, and Japan use OECD principles as the basis for national AI strategies.<br><br><a href="take-action.html" class="btn btn--ghost btn--sm" style="margin-top:8px">Take Action on this bill →</a></div>
+      </div>
+      <div class="bill bill--global" data-status="active" data-filter-target="status">
+        <div class="bill__header">
+          <div style="flex:1">
+            <span class="badge badge--amber">Active</span>
+            <div class="bill__title">G7 Hiroshima AI Process</div>
+          </div>
+          <button class="bill__expand">+ Details</button>
+        </div>
+        <div class="bill__desc">Ongoing coordination among the world's largest economies to develop shared principles for safe, trustworthy AI governance.</div>
+        <div class="bill__details">Launched May 2023 by Japan's G7 presidency. The Hiroshima AI Process brings together the seven largest economies (US, Japan, Germany, UK, France, Italy, Canada) plus the EU to develop shared principles and guidelines for responsible AI governance. Outputs include the Code of Conduct for Responsible AI Development by Private Sector Companies. <strong>Status:</strong> Ongoing, with annual summits and working groups addressing AI safety, data governance, and international coordination.<br><br><a href="take-action.html" class="btn btn--ghost btn--sm" style="margin-top:8px">Take Action on this bill →</a></div>
+      </div>
+      <div class="bill bill--global" data-status="in development" data-filter-target="status">
+        <div class="bill__header">
+          <div style="flex:1">
+            <span class="badge badge--gray">In development</span>
+            <div class="bill__title">UN AI Advisory Body</div>
+          </div>
+          <button class="bill__expand">+ Details</button>
+        </div>
+        <div class="bill__desc">Proposed UN mechanism to advise member states on AI governance and ensure equitable global access to AI benefits.</div>
+        <div class="bill__details">Proposed by UN Secretary-General António Guterres in 2023, with governance structure still in development. The Advisory Body would provide guidance to UN member states on AI policy, address global risks from advanced AI systems, and ensure that AI development and deployment benefit all countries equitably, not just wealthy ones. <strong>Status:</strong> Framework being finalized with expected establishment in 2026.<br><br><a href="take-action.html" class="btn btn--ghost btn--sm" style="margin-top:8px">Take Action on this bill →</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section--light" style="text-align: center; padding: 40px 20px; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
+  <p style="font-size: 13px; color: var(--color-text-faint); margin: 0;">Global frameworks set the stage. Here's what's happening in the US.</p>
+</section>
+
+<section class="section--white">
+  <div class="container">
+    <div class="tier-header--federal">
+      <h2 class="tier-header__title">Federal Legislation</h2>
+      <p class="tier-header__description">Bills and initiatives at the US federal level</p>
+    </div>
+    <div class="tier-content">
+      <div class="bill bill--federal" data-status="active" data-filter-target="status">
+        <div class="bill__header">
+          <div style="flex:1">
+            <span class="badge badge--amber">Senate committee</span>
+            <div class="bill__title">AI in Hiring Transparency Act</div>
+          </div>
+          <button class="bill__expand">+ Details</button>
+        </div>
+        <div class="bill__desc">Requires employers to disclose when AI is used in hiring and provide workers the right to request human review.</div>
+        <div class="bill__details">Currently in the Senate HELP Committee. This bill mandates that employers inform job applicants when AI is used to screen or evaluate their applications, explain the key factors the AI considers, and provide a process for requesting human review if the AI rejects them. <strong>Your rights:</strong> You would have the right to know when AI is evaluating your application and to request a human reviewer look at your case.<br><br><a href="take-action.html" class="btn btn--ghost btn--sm" style="margin-top:8px">Take Action on this bill →</a></div>
+      </div>
+      <div class="bill bill--federal" data-status="in force" data-filter-target="status">
+        <div class="bill__header">
+          <div style="flex:1">
+            <span class="badge badge--blue">7 of 12 active</span>
+            <div class="bill__title">Executive Order on AI Safety</div>
+          </div>
+          <button class="bill__expand">+ Details</button>
+        </div>
+        <div class="bill__desc">Presidential order establishing AI safety standards for federal agencies and directing NIST to develop risk management frameworks.</div>
+        <div class="bill__details">Signed October 2023. The Executive Order directs federal agencies to adopt AI safety practices, directs NIST to develop standards for AI risk management, and establishes the AI Safety Institute to coordinate federal AI safety efforts. Seven of the twelve promised initiatives are currently active. <strong>Status:</strong> Ongoing implementation, with NIST AI Risk Management Framework published in January 2024.<br><br><a href="take-action.html" class="btn btn--ghost btn--sm" style="margin-top:8px">Take Action on this bill →</a></div>
+      </div>
+      <div class="bill bill--federal" data-status="in force" data-filter-target="status">
+        <div class="bill__header">
+          <div style="flex:1">
+            <span class="badge badge--teal">Published</span>
+            <div class="bill__title">NIST AI Risk Management Framework</div>
+          </div>
+          <button class="bill__expand">+ Details</button>
+        </div>
+        <div class="bill__desc">First comprehensive federal standard for AI risk management, providing guidelines for assessing and mitigating AI harms.</div>
+        <div class="bill__details">Published January 2024. The NIST AI Risk Management Framework (AI RMF) is a voluntary guidance document for organizations deploying AI systems. It provides a structured approach to identifying AI risks, assessing impacts on people and groups, and implementing mitigation strategies. Not legally binding, but becoming the de facto standard for federal contractors and many private companies. <strong>Impact:</strong> Already being adopted by companies across healthcare, finance, and government.<br><br><a href="take-action.html" class="btn btn--ghost btn--sm" style="margin-top:8px">Take Action on this bill →</a></div>
+      </div>
+      <div class="bill bill--federal" data-status="pending" data-filter-target="status">
+        <div class="bill__header">
+          <div style="flex:1">
+            <span class="badge badge--gray">House committee</span>
+            <div class="bill__title">AI Accountability Act</div>
+          </div>
+          <button class="bill__expand">+ Details</button>
+        </div>
+        <div class="bill__desc">Proposes FTC enforcement authority for high-risk AI systems, mandatory impact assessments, and mandatory disclosure of AI use.</div>
+        <div class="bill__details">Currently in the House Energy and Commerce Committee. The AI Accountability Act would require companies to conduct and publish impact assessments before deploying high-risk AI in employment, credit, housing, or education decisions. It would also create a mechanism for reporting algorithmic harms and give the FTC authority to enforce compliance. <strong>Your rights:</strong> You would have the right to know when high-risk AI is used in decisions about you and to seek recourse if the AI discriminates.<br><br><a href="take-action.html" class="btn btn--ghost btn--sm" style="margin-top:8px">Take Action on this bill →</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section--light" style="text-align: center; padding: 40px 20px; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
+  <p style="font-size: 13px; color: var(--color-text-faint); margin: 0;">Federal action is just part of the story. States are leading on worker protection.</p>
+</section>
+
+<section class="section--white">
+  <div class="container">
+    <div class="tier-header--state">
+      <h2 class="tier-header__title">State & Territory Legislation</h2>
+      <p class="tier-header__description" style="margin-bottom: 20px;">AI laws that directly affect you</p>
+      <span id="state-label-bar" style="font-size: 12px; color: var(--color-text-faint);"></span>
+    </div>
+    <div class="tier-content">
+      <div id="state-prompt" style="font-size: 13px; color: var(--color-text-faint); padding: 12px 0;">Select your state above to see relevant legislation.</div>
+      <div id="state-bills" style="display: none;"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section--light" style="text-align: center; padding: 40px 20px; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
+  <p style="font-size: 13px; color: var(--color-text-faint); margin: 0;">Local governments are often the first to act.</p>
+</section>
+
+<section class="section--white">
+  <div class="container">
+    <div class="tier-header--local">
+      <h2 class="tier-header__title">Local Ordinances</h2>
+      <p class="tier-header__description" style="margin-bottom: 20px;">Cities and counties leading on AI transparency</p>
+      <span id="local-label-bar" style="font-size: 12px; color: var(--color-text-faint);"></span>
+    </div>
+    <div class="tier-content">
+      <div id="local-prompt" style="font-size: 13px; color: var(--color-text-faint); padding: 12px 0;">Select your state above to see local ordinances.</div>
+      <div id="local-bills" style="display: none;"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section--dark" style="text-align: center; padding: 60px 20px;">
+  <h2 style="color: #fff; font-size: 24px; margin: 0 0 16px 0; font-family: 'Crimson Text', serif;">Ready to act?</h2>
+  <p style="color: rgba(255,255,255,0.8); font-size: 14px; margin: 0 0 24px 0;">Your voice in AI policy starts here.</p>
+  <a href="take-action.html" class="btn btn--amber">Take Action →</a>
+</section>
+
+<footer class="footer">
+  <span class="footer__note">voxpopulai.org — nonprofit · independent · no AI corporate funding</span>
+  <nav class="footer__links">
+    <a href="about.html">About</a>
+    <a href="editorial-policy.html">Editorial policy</a>
+    <a href="how-we-source.html">How we source</a>
+    <a href="corrections.html">Corrections</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</footer>
+
+<script>
+const stateData = {
+  CA:[
+    {id:'ca1',name:'SB 942 — California AI Transparency Act',status:'Signed 2024',cls:'badge--teal',tier:'state',desc:'Requires AI content disclosure for systems with 1M+ monthly users.',detail:'Signed September 2024. Requires AI providers to disclose when content is AI-generated and maintain a public disclosure policy. <strong>Your rights:</strong> You can verify whether content is AI-generated through the provider\'s disclosure tool.'},
+    {id:'ca2',name:'AB 2013 — AI Training Data Transparency',status:'Signed 2024',cls:'badge--teal',tier:'state',desc:'Requires AI developers to publish documentation on training data used in high-stakes decisions.',detail:'Requires developers of generative AI available to Californians to post training data sources, date ranges, and whether personal information was included. <strong>Your rights:</strong> You can look up what data was used to train AI systems that affect you.'},
+    {id:'ca3',name:'CPRA — AI Profiling Opt-Out',status:'In force',cls:'badge--green',tier:'state',desc:'Gives Californians the right to opt out of automated profiling for significant decisions.',detail:'Under CPRA, Californians can opt out of automated decision-making used to evaluate them for employment, credit, housing, education, or healthcare. Enforced by the California Privacy Protection Agency.'}
+  ],
+  NY:[
+    {id:'ny1',name:'NYC Local Law 144 — AI Hiring Bias Audits',status:'In force',cls:'badge--green',tier:'state',desc:'Requires NYC employers using AI in hiring to conduct annual bias audits and notify applicants.',detail:'In force since July 2023. Employers must conduct annual independent bias audits, post results publicly, and notify candidates at least 10 days before AI is used on their application. <strong>Your rights:</strong> You must be notified if AI is used and can request an accommodation.'},
+    {id:'ny2',name:'NY Senate S7543A — AI Governance Act',status:'Active',cls:'badge--amber',tier:'state',desc:'Would establish a statewide AI Bill of Rights and require impact assessments for high-risk AI.',detail:'Currently in committee. Would create a statewide framework requiring agencies to conduct algorithmic impact assessments and give New Yorkers the right to know when AI makes consequential decisions about them.'}
+  ],
+  IL:[
+    {id:'il1',name:'AI Video Interview Act',status:'In force',cls:'badge--green',tier:'state',desc:'First US law requiring employer disclosure before using AI to analyze job interview videos.',detail:'In force since January 2020. Employers must notify applicants that AI will analyze their video interview, explain how it works, and obtain consent. <strong>Your rights:</strong> You can refuse AI video analysis — the employer must then use a human reviewer.'},
+    {id:'il2',name:'Illinois AI Governance Act',status:'Pending',cls:'badge--gray',tier:'state',desc:'Would create a comprehensive AI accountability framework across state government and high-risk private uses.',detail:'Pending in the legislature. Would establish an AI governance board, require impact assessments for high-risk AI in state services, and create a public registry of AI systems used by state agencies.'}
+  ],
+  TX:[
+    {id:'tx1',name:'Texas Responsible AI Governance Act',status:'Passed (limited)',cls:'badge--blue',tier:'state',desc:'Establishes voluntary AI governance principles for state agencies — limited scope, no enforcement.',detail:'Passed in 2023. Establishes a framework for Texas state agencies to voluntarily adopt AI governance practices. Narrow scope — does not create private rights of action or apply to private employers.'},
+    {id:'tx2',name:'HB 1709 — Biometric Identifier Act (AI amendment)',status:'Active',cls:'badge--amber',tier:'state',desc:'Would extend Texas biometric privacy law to cover AI systems that infer biometric data.',detail:'Currently in committee. Would extend the existing Texas Capture or Use of Biometric Identifier Act to cover AI systems that infer biometric identifiers from behavioral signals.'}
+  ],
+  CO:[
+    {id:'co1',name:'SB 205 — Consumer Protections for Artificial Intelligence',status:'Signed 2024',cls:'badge--teal',tier:'state',desc:'First US state law requiring impact assessments for AI used in consequential decisions.',detail:'Signed May 2024, effective February 2026. Requires developers and deployers of high-risk AI to conduct impact assessments and provide notice when AI makes consequential decisions. <strong>Your rights (from Feb 2026):</strong> If an employer uses AI in a consequential employment decision, you must be notified and can request human review.'},
+    {id:'co2',name:'CO Algorithmic Fairness in Insurance',status:'Active',cls:'badge--amber',tier:'state',desc:'Would prohibit insurance companies from using AI in ways that produce discriminatory outcomes.',detail:'Advancing through the Colorado legislature. Would require insurers to audit AI tools for disparate impact and provide transparency on factors used in coverage and pricing decisions.'}
+  ],
+  WA:[
+    {id:'wa1',name:'My Health My Data Act — AI provisions',status:'In force',cls:'badge--green',tier:'state',desc:'Broad health data privacy law covering AI inference of health conditions from behavioral data.',detail:'In force since March 2024. Covers any data that can be used to infer health status — including AI systems that infer health conditions from fitness tracking or browsing behavior. <strong>Your rights:</strong> You can request deletion of health-related data and must consent before it is shared.'},
+    {id:'wa2',name:'SB 5838 — Artificial Intelligence Accountability',status:'Active',cls:'badge--amber',tier:'state',desc:'Would establish disclosure requirements and impact assessment mandates for high-risk AI decisions.',detail:'Currently in the Washington State Senate. Would require organizations using high-risk AI in employment, credit, housing, or government services to conduct impact assessments and provide disclosures.'}
+  ]
+};
+
+const localData = {
+  CA:[
+    {id:'lca1',name:'SF Automated Decision Systems Ordinance',city:'San Francisco',status:'Proposed',cls:'badge--gray',desc:'Would require city departments to inventory and assess automated decision systems before deployment.',detail:'Introduced to the SF Board of Supervisors. Would create public accountability for AI tools used in city services including predictive policing and benefits determination.'},
+    {id:'lca2',name:'LA Office of Responsible Technology',city:'Los Angeles',status:'Active',cls:'badge--amber',desc:'LA\'s newly established office developing ethical AI guidelines for city government.',detail:'Established in 2024. The Office is developing procurement standards for AI tools and a public inventory of city AI systems.'}
+  ],
+  NY:[
+    {id:'lny1',name:'NYC Local Law 144 (see state level)',city:'New York City',status:'In force',cls:'badge--green',desc:'NYC\'s AI hiring bias audit law is the most significant local AI ordinance in the US.',detail:'In force since July 2023. Requires annual independent bias audits. This law is the direct model for several pending state and federal bills.'},
+    {id:'lny2',name:'NYC AI in Criminal Justice Reform',city:'New York City',status:'Pending',cls:'badge--gray',desc:'Would require disclosure and auditing of AI tools used in pre-trial risk assessment and parole.',detail:'Introduced in the NYC Council. Would create a first-of-its-kind audit system for AI tools used in the criminal justice system.'}
+  ],
+  IL:[{id:'lil1',name:'Chicago AI Ethics Working Group',city:'Chicago',status:'Tracking',cls:'badge--blue',desc:'City council working group reviewing AI use by city departments — recommendations expected.',detail:'Established following community advocacy around predictive policing tools. No binding legislation yet, but outcomes are expected to inform city ordinances.'}],
+  TX:[{id:'ltx1',name:'Texas cities — no significant local AI ordinances',city:'Statewide',status:'Tracking',cls:'badge--gray',desc:'No major Texas city has passed AI-specific ordinances yet — tracking developments.',detail:'Texas state law currently preempts some local regulations. Advocacy groups in Austin, Dallas, and Houston are monitoring developments.'}],
+  CO:[{id:'lco1',name:'Denver AI in city services transparency initiative',city:'Denver',status:'Active',cls:'badge--amber',desc:'Denver is voluntarily building an AI use registry for all city government AI applications.',detail:'Denver launched a proactive AI transparency initiative in 2024, creating a public-facing inventory of all AI tools used by city departments.'}],
+  WA:[{id:'lwa1',name:'Seattle Automated Decision Systems in Employment',city:'Seattle',status:'Active',cls:'badge--amber',desc:'Seattle is developing disclosure requirements for employers using AI in hiring and HR.',detail:'Seattle\'s Office of Labor Standards is developing guidance and potentially an ordinance modeled on NYC\'s Local Law 144.'}]
+};
+
+function billHTML(b, tierClass) {
+  return `<div class="bill ${tierClass}" data-status="${b.status.toLowerCase()}" data-filter-target="status">
+    <div class="bill__header">
+      <div style="flex:1">
+        <span class="badge ${b.cls}">${b.status}</span>
+        ${b.city ? `<span style="font-size:10px;color:var(--color-text-faint);margin-left:6px">${b.city}</span>` : ''}
+        <div class="bill__title">${b.name}</div>
+      </div>
+      <button class="bill__expand">+ Details</button>
+    </div>
+    <div class="bill__desc">${b.desc}</div>
+    <div class="bill__details">${b.detail}<br><br><a href="take-action.html" class="btn btn--ghost btn--sm" style="margin-top:8px">Take Action on this bill →</a></div>
+  </div>`;
+}
+
+function renderStateBills(code) {
+  const data = stateData[code];
+  const el = document.getElementById('state-bills');
+  const prompt = document.getElementById('state-prompt');
+  const bar = document.getElementById('state-label-bar');
+  if (bar) bar.textContent = (data ? 'Showing: ' : '') + ({CA:'California',CO:'Colorado',IL:'Illinois',NY:'New York',TX:'Texas',WA:'Washington'}[code] || code);
+  if (!el) return;
+  if (!data || !data.length) { el.innerHTML = '<p style="font-size:13px;color:var(--color-text-faint);padding:12px 0">No state data yet for this state — check back soon.</p>'; }
+  else { el.innerHTML = data.map(b => billHTML(b, 'bill--state')).join(''); }
+  el.style.display = '';
+  if (prompt) prompt.style.display = 'none';
+  initBills();
+}
+
+function renderLocalBills(code) {
+  const data = localData[code];
+  const el = document.getElementById('local-bills');
+  const prompt = document.getElementById('local-prompt');
+  const bar = document.getElementById('local-label-bar');
+  if (bar) bar.textContent = {CA:'California',CO:'Colorado',IL:'Illinois',NY:'New York',TX:'Texas',WA:'Washington'}[code] || code;
+  if (!el) return;
+  if (!data || !data.length) { el.innerHTML = '<p style="font-size:13px;color:var(--color-text-faint);padding:12px 0">No local ordinance data yet.</p>'; }
+  else { el.innerHTML = data.map(b => billHTML(b, 'bill--local')).join(''); }
+  el.style.display = '';
+  if (prompt) prompt.style.display = 'none';
+  initBills();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initLocation({ onSet: function(code) { renderStateBills(code); renderLocalBills(code); } });
+});
+</script>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

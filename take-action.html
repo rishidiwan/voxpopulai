@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Take Action — VoxPopulAI</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230F1923'/><text y='24' x='4' font-size='18' fill='%23EF9F27' font-family='sans-serif'>AI</text></svg>">
+  <style>
+    [data-bill].selected { border: 1.5px solid var(--color-amber); }
+    [data-bill].selected::after { content: 'Selected'; position: absolute; top: 10px; right: 10px; font-size: 10px; background: var(--color-amber); color: var(--color-amber-text); padding: 2px 8px; border-radius: 3px; font-weight: 500; }
+    [data-bill] { position: relative; }
+    #rep-section { display: none; }
+    #rep-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap: 10px; margin-top: 12px; }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <a href="index.html" class="nav__logo">VOX POPUL<span class="nav__logo-ai">AI</span></a>
+  <ul class="nav__links">
+    <li><a href="brief.html">The Brief</a></li>
+    <li><a href="index.html#understand">Understand</a></li>
+    <li><a href="index.html#impact">Your Impact</a></li>
+    <li><a href="take-action.html" class="active">Take Action</a></li>
+    <li><a href="policy-watch.html">Policy Watch</a></li>
+    <li><a href="index.html#community">Community</a></li>
+  </ul>
+  <div class="nav__right">
+    <button class="btn--donate" data-donate-open>Donate</button>
+    <button class="nav__hamburger" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="nav__mobile-menu">
+  <a href="brief.html">The Brief</a>
+  <a href="index.html#understand">Understand</a>
+  <a href="index.html#impact">Your Impact</a>
+  <a href="take-action.html">Take Action</a>
+  <a href="policy-watch.html">Policy Watch</a>
+  <a href="index.html#community">Community</a>
+  <a href="#" class="donate-link" data-donate-open>Donate — $1 · $3 · $5</a>
+</div>
+<div id="donate-overlay" class="donate-overlay">
+  <div class="donate-modal">
+    <div id="donate-form-content">
+      <div class="donate-modal__header">
+        <div><div class="donate-modal__title">Support VoxPopulAI</div><div class="donate-modal__subtitle">Independent AI journalism. No corporate funders. No ads.</div></div>
+        <button class="donate-modal__close" data-donate-close>×</button>
+      </div>
+      <div class="donate-freq">
+        <button class="donate-freq__btn" data-freq="once">One time</button>
+        <button class="donate-freq__btn" data-freq="monthly">Monthly</button>
+      </div>
+      <div class="donate-amounts">
+        <button class="donate-amt" data-amount="1">$1</button>
+        <button class="donate-amt" data-amount="3">$3</button>
+        <button class="donate-amt" data-amount="5">$5</button>
+      </div>
+      <div class="donate-custom"><span class="donate-custom__prefix">$</span><input id="donate-custom-input" type="number" min="1" placeholder="Other amount"></div>
+      <div class="donate-impact" id="donate-impact-msg">$3 covers one day of The Brief for 12 readers.</div>
+      <button class="donate-confirm" id="donate-confirm">Donate $3 →</button>
+      <div class="donate-legal">501(c)(3) nonprofit. Tax-deductible. Processed via Stripe.</div>
+    </div>
+    <div id="donate-thanks" class="donate-thanks" style="display:none">
+      <div class="donate-thanks__icon">✓</div>
+      <div class="donate-thanks__title">Thank you.</div>
+      <div class="donate-thanks__msg">Your support keeps VoxPopulAI free for everyone.</div>
+      <button class="btn btn--amber btn--full" data-donate-close>Back to VoxPopulAI</button>
+    </div>
+  </div>
+</div>
+
+<section class="section--dark">
+  <div class="container">
+    <span class="badge badge--amber">Take Action</span>
+    <h1 class="headline--serif">Your voice in the AI age starts here</h1>
+    <p style="font-size: 16px; color: rgba(255,255,255,0.8); margin: 16px 0 0 0;">AI policy is being written right now. Your voice can shape it.</p>
+    <div style="background: rgba(239, 159, 39, 0.15); border: 1px solid rgba(239, 159, 39, 0.3); border-radius: var(--radius-md); padding: 16px; margin-top: 24px;">
+      <div style="font-size: 12px; color: var(--color-amber); font-weight: 500; text-transform: uppercase; margin-bottom: 4px;">From Policy Watch</div>
+      <div style="font-size: 14px; color: #fff; margin: 0;">Start with the <strong>AI in Hiring Transparency Act</strong> — it's moving through the Senate right now and has the strongest coalition support.</div>
+    </div>
+  </div>
+</section>
+
+<div class="location-bar">
+  <div class="location-bar__default">
+    <div class="location-bar__title">Personalize your actions by location</div>
+    <div class="location-bar__sub">We'll show you your state representatives and relevant state bills</div>
+    <div style="display: flex; gap: 10px; align-items: center; margin-top: 12px;">
+      <button id="detect-location-btn" class="btn btn--amber btn--sm">Detect my location</button>
+      <select class="location-select">
+        <option value="">Select state…</option>
+        <option value="CA">California</option>
+        <option value="CO">Colorado</option>
+        <option value="IL">Illinois</option>
+        <option value="NY">New York</option>
+        <option value="TX">Texas</option>
+        <option value="WA">Washington</option>
+      </select>
+    </div>
+  </div>
+  <div class="location-bar__set" style="display: none;">
+    <div style="display: flex; gap: 8px; align-items: center;">
+      <span style="font-size: 20px;">📍</span>
+      <span>Your location: <span id="location-label"></span></span>
+      <span class="badge badge--teal" style="margin-left: 8px;">Saved</span>
+      <button id="clear-location-btn" class="btn btn--ghost btn--sm" style="margin-left: auto;">Change</button>
+    </div>
+  </div>
+</div>
+
+<section class="section--white">
+  <div class="container">
+    <div id="rep-section">
+      <h2 style="font-size: 18px; margin: 0 0 8px 0; font-family: 'Crimson Text', serif;">Your representatives</h2>
+      <p style="font-size: 13px; color: var(--color-text-faint); margin: 0 0 16px 0;">Contact them directly on AI policy.</p>
+      <div id="rep-cards"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section--white">
+  <div class="container">
+    <h2 style="font-size: 18px; margin: 0 0 16px 0; font-family: 'Crimson Text', serif;">Choose a priority bill</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+      <div data-bill="hiring" class="bill selected" style="background: #fff; border: 1.5px solid var(--color-amber); border-radius: var(--radius-md); padding: 16px; cursor: pointer;">
+        <span class="badge badge--amber">Senate committee</span>
+        <div style="font-size: 12px; color: var(--color-text); margin-top: 8px; font-weight: 500;">Linked from Policy Watch</div>
+        <div style="font-size: 14px; font-weight: 600; color: #000; margin-top: 4px;">AI in Hiring Transparency Act</div>
+        <div style="font-size: 13px; color: var(--color-text-faint); margin-top: 8px;">Requires employers to disclose AI use in hiring.</div>
+      </div>
+      <div data-bill="accountability" class="bill" style="background: #fff; border: 0.5px solid var(--color-border); border-radius: var(--radius-md); padding: 16px; cursor: pointer;">
+        <span class="badge badge--blue">House committee</span>
+        <div style="font-size: 13px; color: var(--color-text-faint); margin-top: 8px;"></div>
+        <div style="font-size: 14px; font-weight: 600; color: #000; margin-top: 4px;">AI Accountability Act</div>
+        <div style="font-size: 13px; color: var(--color-text-faint); margin-top: 8px;">FTC enforcement for high-risk AI systems.</div>
+      </div>
+      <div data-bill="state" class="bill" style="background: #fff; border: 0.5px solid var(--color-border); border-radius: var(--radius-md); padding: 16px; cursor: pointer;">
+        <span class="badge badge--gray">Your state</span>
+        <div style="font-size: 13px; color: var(--color-text-faint); margin-top: 8px;"></div>
+        <div style="font-size: 14px; font-weight: 600; color: #000; margin-top: 4px;" id="state-bill-title">Your state priority</div>
+        <div style="font-size: 13px; color: var(--color-text-faint); margin-top: 8px;" id="state-bill-desc">Select your state to see your state priority bill.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section--surface">
+  <div class="container">
+    <div style="display: flex; gap: 8px; flex-wrap: wrap; border-bottom: 1px solid var(--color-border); padding-bottom: 16px;" data-tab-group="action">
+      <button class="action-tab" data-tab="email" style="border-bottom: 2px solid var(--color-amber); color: #000; font-weight: 500; padding: 8px 0; background: none; border: none; cursor: pointer;">Email your rep</button>
+      <button class="action-tab" data-tab="phone" style="border-bottom: none; color: var(--color-text-faint); font-weight: 400; padding: 8px 0; background: none; border: none; cursor: pointer;">Call your rep</button>
+      <button class="action-tab" data-tab="comment" style="border-bottom: none; color: var(--color-text-faint); font-weight: 400; padding: 8px 0; background: none; border: none; cursor: pointer;">Public comment</button>
+      <button class="action-tab" data-tab="story" style="border-bottom: none; color: var(--color-text-faint); font-weight: 400; padding: 8px 0; background: none; border: none; cursor: pointer;">Share your story</button>
+    </div>
+  </div>
+</section>
+
+<section class="section--white">
+  <div class="container">
+    <!-- Email tab -->
+    <div id="email">
+      <div id="template-title" style="font-size: 16px; font-weight: 600; margin: 0 0 16px 0;">Email template — AI in Hiring Transparency Act</div>
+      <div style="background: #fafafa; border-radius: var(--radius-md); padding: 16px; margin-bottom: 16px;">
+        <label style="display: block; font-size: 12px; color: var(--color-text-faint); text-transform: uppercase; margin-bottom: 4px;">Subject</label>
+        <input id="template-subject" class="template-subject" type="text" value="Please co-sponsor the AI in Hiring Transparency Act" style="width: 100%; padding: 8px; border: 0.5px solid var(--color-border); border-radius: var(--radius-sm); font-size: 13px; box-sizing: border-box;">
+      </div>
+      <div style="background: #fafafa; border-radius: var(--radius-md); padding: 16px; margin-bottom: 16px;">
+        <label style="display: block; font-size: 12px; color: var(--color-text-faint); text-transform: uppercase; margin-bottom: 8px;">Message</label>
+        <textarea id="template-body" class="template-body" style="width: 100%; padding: 12px; border: 0.5px solid var(--color-border); border-radius: var(--radius-sm); font-size: 13px; font-family: system-ui; line-height: 1.6; min-height: 200px; box-sizing: border-box; resize: vertical;">Dear [Senator's name],
+
+I am writing as your constituent from [your city, state] to urge you to co-sponsor the AI in Hiring Transparency Act, currently before the Senate HELP Committee.
+
+This legislation would require employers to:
+• Disclose when AI is used in hiring decisions
+• Explain what data and criteria the AI evaluates
+• Provide a process for requesting human review
+
+Automated tools now screen most large-company applications before any human sees them — with no disclosure and no recourse when the algorithm is wrong.
+
+[Add your personal experience here]
+
+I urge you to co-sponsor this bill and push for a committee hearing before the end of this session.
+
+Thank you,
+[Your name]
+[Your city, state]</textarea>
+      </div>
+      <button id="copy-btn" class="btn btn--amber">Copy to clipboard</button>
+      <span id="copy-confirm" style="display: none; margin-left: 12px; font-size: 13px; color: var(--color-text-faint);">Copied!</span>
+      <div style="background: #f0f4f8; border-radius: var(--radius-md); padding: 16px; margin-top: 24px;">
+        <div style="font-size: 12px; font-weight: 500; color: #000; margin-bottom: 8px;">How to send:</div>
+        <div style="font-size: 13px; color: var(--color-text); margin-bottom: 12px;">Paste this email into your senator's contact form at <a href="https://www.senate.gov/senators/senators-contact.htm" target="_blank" rel="noopener" style="color: var(--color-amber); text-decoration: none;">senate.gov/senators/senators-contact</a></div>
+        <div style="font-size: 13px; color: var(--color-text-faint);">You can also call their office at <strong>202-224-3121</strong> and ask to leave a message with the legislative aide on AI policy.</div>
+      </div>
+    </div>
+
+    <!-- Phone tab -->
+    <div id="phone" style="display: none;">
+      <div style="font-size: 16px; font-weight: 600; margin: 0 0 16px 0;">Call your representative</div>
+      <div style="background: #fafafa; border-radius: var(--radius-md); padding: 24px; text-align: center; margin-bottom: 24px;">
+        <div style="font-size: 12px; color: var(--color-text-faint); text-transform: uppercase; margin-bottom: 8px;">Main Senate switchboard</div>
+        <a href="tel:+12022243121" style="font-size: 28px; color: var(--color-amber); font-weight: 600; text-decoration: none;">202-224-3121</a>
+      </div>
+      <div style="background: #f0f4f8; border-radius: var(--radius-md); padding: 16px; margin-bottom: 24px;">
+        <div style="font-size: 12px; font-weight: 500; color: #000; margin-bottom: 12px;">Script to use:</div>
+        <div id="phone-script-text" style="font-size: 13px; color: var(--color-text); line-height: 1.6; white-space: pre-wrap;">Hi, my name is [your name] and I'm a constituent from [your city, state].
+
+I'm calling to urge [Senator's name] to co-sponsor the AI in Hiring Transparency Act. Workers deserve to know when AI is making decisions about their job applications, and they need the right to request a human review.
+
+This is a basic transparency measure. I'd love to know the senator's position.
+
+Thank you for your time.</div>
+      </div>
+      <div style="font-size: 13px; color: var(--color-text-faint); background: #f5f5f5; padding: 12px; border-radius: var(--radius-sm);">
+        <strong style="color: #000;">Tips:</strong> Be brief and polite. The person answering is not the Senator — they're just taking messages. One call from a constituent matters.
+      </div>
+    </div>
+
+    <!-- Comment tab -->
+    <div id="comment" style="display: none;">
+      <div style="font-size: 16px; font-weight: 600; margin: 0 0 16px 0;">Submit a public comment</div>
+      <p style="font-size: 13px; color: var(--color-text-faint); margin: 0 0 16px 0;">Federal agencies are accepting public input on AI policy right now. Your voice counts.</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-bottom: 24px;">
+        <div style="background: #fff; border: 0.5px solid var(--color-border); border-radius: var(--radius-md); padding: 16px;">
+          <div style="font-size: 12px; color: var(--color-amber); font-weight: 500; text-transform: uppercase; margin-bottom: 4px;">FTC AI Comment Period</div>
+          <div style="font-size: 14px; font-weight: 600; color: #000; margin-bottom: 8px;">AI Use in Hiring</div>
+          <div style="font-size: 12px; color: var(--color-text-faint); margin-bottom: 12px;">Deadline: <strong>May 15, 2026</strong></div>
+          <button class="btn btn--amber btn--sm" onclick="document.getElementById('comment-template-area').style.display='block'">Load template</button>
+          <a href="https://www.regulations.gov" target="_blank" rel="noopener" class="btn btn--ghost btn--sm" style="margin-left: 6px;">Submit at regulations.gov</a>
+        </div>
+        <div style="background: #fff; border: 0.5px solid var(--color-border); border-radius: var(--radius-md); padding: 16px;">
+          <div style="font-size: 12px; color: var(--color-blue); font-weight: 500; text-transform: uppercase; margin-bottom: 4px;">NIST AI Safety</div>
+          <div style="font-size: 14px; font-weight: 600; color: #000; margin-bottom: 8px;">Testing & Evaluation Standards</div>
+          <div style="font-size: 12px; color: var(--color-text-faint); margin-bottom: 12px;">Open for 45 days</div>
+          <button class="btn btn--blue btn--sm" onclick="document.getElementById('comment-template-area').style.display='block'">Load template</button>
+          <a href="https://www.nist.gov" target="_blank" rel="noopener" class="btn btn--ghost btn--sm" style="margin-left: 6px;">View at NIST</a>
+        </div>
+      </div>
+      <div id="comment-template-area" style="display: none; background: #fafafa; border-radius: var(--radius-md); padding: 16px; margin-bottom: 16px;">
+        <label style="display: block; font-size: 12px; color: var(--color-text-faint); text-transform: uppercase; margin-bottom: 8px;">Your comment</label>
+        <textarea style="width: 100%; padding: 12px; border: 0.5px solid var(--color-border); border-radius: var(--radius-sm); font-size: 13px; font-family: system-ui; line-height: 1.6; min-height: 160px; box-sizing: border-box; resize: vertical;">I am writing to express my strong support for federal regulations on AI use in employment decisions.
+
+AI tools are already making hiring, promotion, and firing decisions affecting millions of workers. Without transparency and accountability, workers cannot challenge biased or inaccurate decisions.
+
+At minimum, federal policy must require:
+1. Disclosure when AI is used in employment decisions
+2. Explanation of how the AI evaluates workers
+3. Right to human review when AI rejects or flags an application
+4. Regular bias audits and public reporting of results
+
+AI should serve workers, not replace human judgment without accountability. I urge you to advance regulations that put transparency first.
+
+Thank you,
+[Your name]</textarea>
+        <button id="copy-comment-btn" class="btn btn--amber" style="margin-top: 12px;">Copy to clipboard</button>
+        <span id="comment-copy-confirm" style="display: none; margin-left: 12px; font-size: 13px; color: var(--color-text-faint);">Copied!</span>
+      </div>
+    </div>
+
+    <!-- Story tab -->
+    <div id="story" style="display: none;">
+      <div style="font-size: 16px; font-weight: 600; margin: 0 0 16px 0;">Share your story</div>
+      <p style="font-size: 13px; color: var(--color-text-faint); margin: 0 0 16px 0;">Has AI affected your job, credit, housing, or education? Share it with VoxPopulAI to help shape the narrative.</p>
+      <div style="display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap;">
+        <button class="filter-pill" data-category="hiring" style="cursor: pointer;">Hiring</button>
+        <button class="filter-pill" data-category="workplace" style="cursor: pointer;">Workplace</button>
+        <button class="filter-pill" data-category="data" style="cursor: pointer;">Data & privacy</button>
+        <button class="filter-pill" data-category="benefits" style="cursor: pointer;">Benefits & loans</button>
+        <button class="filter-pill" data-category="other" style="cursor: pointer;">Other</button>
+      </div>
+      <div style="background: #fafafa; border-radius: var(--radius-md); padding: 16px; margin-bottom: 16px;">
+        <label style="display: block; font-size: 12px; color: var(--color-text-faint); text-transform: uppercase; margin-bottom: 8px;">Tell us what happened</label>
+        <textarea id="story-textarea" style="width: 100%; padding: 12px; border: 0.5px solid var(--color-border); border-radius: var(--radius-sm); font-size: 13px; font-family: system-ui; line-height: 1.6; min-height: 160px; box-sizing: border-box; resize: vertical;" placeholder="Describe how AI affected you. Include specific details about what happened, when, and the impact on you."></textarea>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px;">
+        <div>
+          <label style="display: block; font-size: 12px; color: var(--color-text-faint); text-transform: uppercase; margin-bottom: 4px;">What industry or field?</label>
+          <input id="story-industry" type="text" placeholder="e.g., Healthcare, Finance, Tech" style="width: 100%; padding: 8px; border: 0.5px solid var(--color-border); border-radius: var(--radius-sm); font-size: 13px; box-sizing: border-box;">
+        </div>
+        <div>
+          <label style="display: block; font-size: 12px; color: var(--color-text-faint); text-transform: uppercase; margin-bottom: 4px;">Your location (optional)</label>
+          <input id="story-state" type="text" placeholder="City, State" style="width: 100%; padding: 8px; border: 0.5px solid var(--color-border); border-radius: var(--radius-sm); font-size: 13px; box-sizing: border-box;">
+        </div>
+      </div>
+      <label style="display: flex; gap: 8px; align-items: center; margin-bottom: 16px; cursor: pointer;">
+        <input id="story-anonymous" type="checkbox" style="cursor: pointer;">
+        <span style="font-size: 13px; color: var(--color-text);">Share anonymously</span>
+      </label>
+      <button class="btn btn--amber">Submit your story</button>
+    </div>
+  </div>
+</section>
+
+<section class="section--surface">
+  <div class="container">
+    <h2 style="font-size: 18px; margin: 0 0 24px 0; font-family: 'Crimson Text', serif;">Coalition partners</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;">
+      <div style="background: #fff; border-radius: var(--radius-md); padding: 16px;">
+        <span class="badge badge--purple">Bias & fairness</span>
+        <div style="font-size: 14px; font-weight: 600; color: #000; margin: 8px 0;">Algorithmic Justice League</div>
+        <p style="font-size: 12px; color: var(--color-text-faint); margin: 0 0 12px 0;">Focused on racial and gender bias in AI systems.</p>
+        <a href="#" style="font-size: 12px; color: var(--color-amber); text-decoration: none; font-weight: 500;">Learn more →</a>
+      </div>
+      <div style="background: #fff; border-radius: var(--radius-md); padding: 16px;">
+        <span class="badge badge--blue">Digital rights</span>
+        <div style="font-size: 14px; font-weight: 600; color: #000; margin: 8px 0;">Electronic Frontier Foundation (EFF)</div>
+        <p style="font-size: 12px; color: var(--color-text-faint); margin: 0 0 12px 0;">Defending digital privacy and free speech.</p>
+        <a href="#" style="font-size: 12px; color: var(--color-blue); text-decoration: none; font-weight: 500;">Learn more →</a>
+      </div>
+      <div style="background: #fff; border-radius: var(--radius-md); padding: 16px;">
+        <span class="badge badge--amber">Worker rights</span>
+        <div style="font-size: 14px; font-weight: 600; color: #000; margin: 8px 0;">AFL-CIO Tech Institute</div>
+        <p style="font-size: 12px; color: var(--color-text-faint); margin: 0 0 12px 0;">AI impacts on workers and labor.</p>
+        <a href="#" style="font-size: 12px; color: var(--color-amber); text-decoration: none; font-weight: 500;">Learn more →</a>
+      </div>
+      <div style="background: #fff; border-radius: var(--radius-md); padding: 16px;">
+        <span class="badge badge--green">Grassroots</span>
+        <div style="font-size: 14px; font-weight: 600; color: #000; margin: 8px 0;">Fight for the Future</div>
+        <p style="font-size: 12px; color: var(--color-text-faint); margin: 0 0 12px 0;">Community organizing on tech policy.</p>
+        <a href="#" style="font-size: 12px; color: var(--color-green); text-decoration: none; font-weight: 500;">Learn more →</a>
+      </div>
+      <div style="background: #fff; border-radius: var(--radius-md); padding: 16px;">
+        <span class="badge badge--gray">Research</span>
+        <div style="font-size: 14px; font-weight: 600; color: #000; margin: 8px 0;">AI Now Institute</div>
+        <p style="font-size: 12px; color: var(--color-text-faint); margin: 0 0 12px 0;">Independent AI research and accountability.</p>
+        <a href="#" style="font-size: 12px; color: var(--color-text-faint); text-decoration: none; font-weight: 500;">Learn more →</a>
+      </div>
+      <div style="background: #fff; border-radius: var(--radius-md); padding: 16px;">
+        <span class="badge" style="background: #EF4A5C; color: #fff;">Racial justice</span>
+        <div style="font-size: 14px; font-weight: 600; color: #000; margin: 8px 0;">Color of Change</div>
+        <p style="font-size: 12px; color: var(--color-text-faint); margin: 0 0 12px 0;">AI justice and structural inequality.</p>
+        <a href="#" style="font-size: 12px; color: #EF4A5C; text-decoration: none; font-weight: 500;">Learn more →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section--white">
+  <div class="container">
+    <h2 style="font-size: 18px; margin: 0 0 24px 0; font-family: 'Crimson Text', serif;">Key deadlines</h2>
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div class="deadline-item" style="background: #f0f4f8; border-left: 3px solid var(--color-blue); border-radius: var(--radius-sm); padding: 16px;">
+        <div style="font-size: 12px; color: var(--color-blue); font-weight: 500; text-transform: uppercase; margin-bottom: 4px;">Senate HELP Committee</div>
+        <div style="font-size: 14px; font-weight: 600; color: #000; margin-bottom: 4px;">AI in Hiring Transparency Act — Committee markup</div>
+        <div style="font-size: 12px; color: var(--color-text-faint);">Expected May 2026</div>
+      </div>
+      <div class="deadline-item" style="background: #fff4e6; border-left: 3px solid var(--color-amber); border-radius: var(--radius-sm); padding: 16px;">
+        <div style="font-size: 12px; color: var(--color-amber); font-weight: 500; text-transform: uppercase; margin-bottom: 4px;">FTC Comment Period</div>
+        <div style="font-size: 14px; font-weight: 600; color: #000; margin-bottom: 4px;">AI Use in Hiring and Workplace Decisions</div>
+        <div style="font-size: 12px; color: var(--color-text-faint);">Closes: May 15, 2026</div>
+      </div>
+      <div class="deadline-item" style="background: #f0fdf4; border-left: 3px solid var(--color-green); border-radius: var(--radius-sm); padding: 16px;">
+        <div style="font-size: 12px; color: var(--color-green); font-weight: 500; text-transform: uppercase; margin-bottom: 4px;">Colorado State Deadline</div>
+        <div style="font-size: 14px; font-weight: 600; color: #000; margin-bottom: 4px;">SB 205 Implementation Begins</div>
+        <div style="font-size: 12px; color: var(--color-text-faint);">February 1, 2026 — employers must disclose high-risk AI use</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section--dark" style="padding: 40px 20px; text-align: center;">
+  <p style="color: rgba(255,255,255,0.8); font-size: 13px; margin: 0 0 12px 0;">Actions you take are never stored on our servers. Your privacy is protected.</p>
+  <a href="policy-watch.html" style="color: var(--color-amber); text-decoration: none; font-size: 13px;">← Back to Policy Watch</a>
+</section>
+
+<footer class="footer">
+  <span class="footer__note">voxpopulai.org — nonprofit · independent · no AI corporate funding</span>
+  <nav class="footer__links">
+    <a href="about.html">About</a>
+    <a href="editorial-policy.html">Editorial policy</a>
+    <a href="how-we-source.html">How we source</a>
+    <a href="corrections.html">Corrections</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</footer>
+
+<script>
+const repsData = {
+  CA:{senators:['Sen. Alex Padilla (D-CA)','Sen. [See senate.gov for current]'],house:'Find by district at house.gov'},
+  CO:{senators:['Sen. Michael Bennet (D-CO)','Sen. John Hickenlooper (D-CO)'],house:'Find by district'},
+  IL:{senators:['Sen. Dick Durbin (D-IL)','Sen. Tammy Duckworth (D-IL)'],house:'Find by district'},
+  NY:{senators:['Sen. Chuck Schumer (D-NY)','Sen. Kirsten Gillibrand (D-NY)'],house:'Find by district'},
+  TX:{senators:['Sen. John Cornyn (R-TX)','Sen. Ted Cruz (R-TX)'],house:'Find by district'},
+  WA:{senators:['Sen. Patty Murray (D-WA)','Sen. Maria Cantwell (D-WA)'],house:'Find by district'}
+};
+
+const stateBills = {
+  CA:{badge:'Signed 2024',title:'CA SB 942 — AI Transparency Act',desc:'Requires AI content disclosure. Advocate for stronger employment protections.'},
+  CO:{badge:'Effective Feb 2026',title:'CO SB 205 — AI in Decisions',desc:'First state impact assessment law. Push for enforcement funding.'},
+  IL:{badge:'In force',title:'IL AI Video Interview Act',desc:'Strongest US hiring protection. Advocate to expand to all AI hiring tools.'},
+  NY:{badge:'In force',title:'NYC Local Law 144',desc:'Annual bias audit required. Push for statewide expansion.'},
+  TX:{badge:'Limited scope',title:'TX AI Governance Act',desc:'Voluntary only. Advocate for mandatory worker protections.'},
+  WA:{badge:'Active 2024',title:'WA SB 5838 — AI Accountability',desc:'Modeled on Colorado — push your legislators to advance it.'}
+};
+
+const templates = {
+  hiring: {
+    title: 'Email template — AI in Hiring Transparency Act',
+    subject: 'Please co-sponsor the AI in Hiring Transparency Act',
+    phone: 'Hi, my name is [your name] and I\'m a constituent from [your city, state].\n\nI\'m calling to urge [Senator\'s name] to co-sponsor the AI in Hiring Transparency Act. Workers deserve to know when AI is making decisions about their job applications, and they need the right to request a human review.\n\nThis is a basic transparency measure. I\'d love to know the senator\'s position.\n\nThank you for your time.',
+    body: 'Dear [Senator\'s name],\n\nI am writing as your constituent from [your city, state] to urge you to co-sponsor the AI in Hiring Transparency Act, currently before the Senate HELP Committee.\n\nThis legislation would require employers to:\n• Disclose when AI is used in hiring decisions\n• Explain what data and criteria the AI evaluates\n• Provide a process for requesting human review\n\nAutomated tools now screen most large-company applications before any human sees them — with no disclosure and no recourse when the algorithm is wrong.\n\n[Add your personal experience here]\n\nI urge you to co-sponsor this bill and push for a committee hearing before the end of this session.\n\nThank you,\n[Your name]\n[Your city, state]'
+  },
+  accountability: {
+    title: 'Email template — AI Accountability Act',
+    subject: 'Please support the AI Accountability Act',
+    phone: 'Hi, my name is [your name] and I\'m a constituent from [your city, state].\n\nI\'m calling to urge [Representative\'s name] to support the AI Accountability Act in the House Energy and Commerce Committee.\n\nHigh-risk AI is making decisions about people\'s jobs, credit, and housing without audits or accountability. Impact assessments and FTC enforcement are the minimum we need.\n\nThank you for your time.',
+    body: 'Dear [Representative\'s name],\n\nI am writing as your constituent from [your city, state] to urge you to support the AI Accountability Act, currently in the House Energy and Commerce Committee.\n\nThis legislation would require companies deploying high-risk AI in employment, credit, housing, or education to:\n• Conduct and publish impact assessments before deployment\n• Create a reporting mechanism for algorithmic harms\n• Face FTC enforcement for non-compliance\n\nVoluntary compliance has not worked.\n\n[Add your personal experience or perspective here]\n\nI urge you to push this bill out of committee.\n\nThank you,\n[Your name]\n[Your city, state]'
+  },
+  state: {
+    title: 'Email template — your state priority bill',
+    subject: 'Please support AI worker protections in our state',
+    phone: 'Hi, my name is [your name] and I\'m a constituent from [your city].\n\nI\'m calling about AI worker protections in our state. I\'d like to know where [legislator\'s name] stands on requiring transparency and accountability for AI tools used in employment decisions.\n\nThank you for your time.',
+    body: 'Dear [State legislator\'s name],\n\nI am writing as your constituent to urge you to support stronger AI worker protections in our state.\n\nAI tools are already making decisions about hiring and employment — often without workers\' knowledge or any recourse.\n\n[Add your personal experience or the specific bill you\'re advocating for]\n\nI urge you to support:\n• Disclosure requirements for AI in employment decisions\n• The right to human review when AI is used\n• A state-level oversight mechanism for high-risk AI\n\nThank you,\n[Your name]\n[Your city]'
+  }
+};
+
+let currentBill = 'hiring';
+
+function selectBill(bill) {
+  currentBill = bill;
+  document.querySelectorAll('[data-bill]').forEach(c => c.classList.toggle('selected', c.dataset.bill === bill));
+  loadTemplate(bill);
+}
+
+function loadTemplate(bill) {
+  const t = templates[bill];
+  if (!t) return;
+  const titleEl = document.getElementById('template-title');
+  const subjEl = document.getElementById('template-subject');
+  const bodyEl = document.getElementById('template-body');
+  const phoneEl = document.getElementById('phone-script-text');
+  if (titleEl) titleEl.textContent = t.title;
+  if (subjEl) subjEl.value = t.subject;
+  if (bodyEl) bodyEl.value = t.body;
+  if (phoneEl) phoneEl.innerHTML = t.phone.replace(/\n/g, '<br>');
+  document.getElementById('copy-confirm').style.display = 'none';
+}
+
+function copyTemplate() {
+  const subj = document.getElementById('template-subject')?.value || '';
+  const body = document.getElementById('template-body')?.value || '';
+  copyToClipboard('Subject: ' + subj + '\n\n' + body, document.getElementById('copy-confirm'));
+}
+
+function renderReps(code) {
+  const data = repsData[code];
+  const el = document.getElementById('rep-cards');
+  const section = document.getElementById('rep-section');
+  if (!data || !el) return;
+  const stateLabel = {CA:'California',CO:'Colorado',IL:'Illinois',NY:'New York',TX:'Texas',WA:'Washington'}[code] || code;
+  el.innerHTML = data.senators.map(s => `
+    <div style="background:#fff;border:0.5px solid var(--color-border);border-radius:var(--radius-md);padding:14px">
+      <div style="font-size:12px;font-weight:500;color:var(--color-text);margin-bottom:2px">${s}</div>
+      <div style="font-size:10px;color:var(--color-text-faint);margin-bottom:8px">United States Senate</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <a href="https://www.senate.gov/senators/senators-contact.htm" target="_blank" rel="noopener" class="btn btn--amber btn--sm">Email office</a>
+        <a href="tel:+12022243121" class="btn btn--ghost btn--sm">202-224-3121</a>
+      </div>
+    </div>`).join('') + `
+    <div style="background:#fff;border:0.5px solid var(--color-border);border-radius:var(--radius-md);padding:14px">
+      <div style="font-size:12px;font-weight:500;color:var(--color-text);margin-bottom:2px">Your House Representative</div>
+      <div style="font-size:10px;color:var(--color-text-faint);margin-bottom:8px">United States House</div>
+      <a href="https://www.house.gov/representatives/find-your-representative" target="_blank" rel="noopener" class="btn btn--amber btn--sm">Find by zip code</a>
+    </div>`;
+  if (section) section.style.display = 'block';
+}
+
+function renderStateBillCard(code) {
+  const b = stateBills[code];
+  if (!b) return;
+  document.getElementById('state-bill-badge').textContent = b.badge;
+  document.getElementById('state-bill-title').textContent = b.title;
+  document.getElementById('state-bill-desc').textContent = b.desc;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadTemplate('hiring');
+  initLocation({ onSet: function(code) { renderReps(code); renderStateBillCard(code); } });
+  initActionTabs();
+  document.querySelectorAll('[data-bill]').forEach(card => {
+    card.addEventListener('click', () => selectBill(card.dataset.bill));
+  });
+  document.getElementById('copy-btn')?.addEventListener('click', copyTemplate);
+  document.getElementById('load-comment-template')?.addEventListener('click', () => {
+    document.getElementById('comment-template-area').style.display = 'block';
+  });
+  document.getElementById('copy-comment-btn')?.addEventListener('click', () => {
+    const text = document.querySelector('#comment-template-area textarea')?.value || '';
+    copyToClipboard(text, document.getElementById('comment-copy-confirm'));
+  });
+});
+</script>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
