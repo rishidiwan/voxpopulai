@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The VoxPopulAI Brief — daily AI news in plain language. What the AI age means for your work, your rights, and your voice.">
+  <title>The Brief — VoxPopulAI</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230F1923'/><text y='24' x='4' font-size='18' fill='%23EF9F27' font-family='sans-serif'>AI</text></svg>">
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <a href="index.html" class="nav__logo" aria-label="VoxPopulAI home">
+    VOX POPUL<span class="nav__logo-ai">AI</span>
+  </a>
+  <ul class="nav__links" role="list">
+    <li><a href="brief.html" class="active">The Brief</a></li>
+    <li><a href="index.html#understand">Understand</a></li>
+    <li><a href="index.html#impact">Your Impact</a></li>
+    <li><a href="take-action.html">Take Action</a></li>
+    <li><a href="policy-watch.html">Policy Watch</a></li>
+    <li><a href="index.html#community">Community</a></li>
+  </ul>
+  <div class="nav__right">
+    <button class="btn--donate" data-donate-open aria-label="Donate to VoxPopulAI">Donate</button>
+    <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="nav__mobile-menu" role="navigation" aria-label="Mobile navigation">
+  <a href="brief.html">The Brief</a>
+  <a href="index.html#understand">Understand</a>
+  <a href="index.html#impact">Your Impact</a>
+  <a href="take-action.html">Take Action</a>
+  <a href="policy-watch.html">Policy Watch</a>
+  <a href="index.html#community">Community</a>
+  <a href="#" class="donate-link" data-donate-open>Donate — $1 · $3 · $5</a>
+</div>
+
+<!-- ── Donate Modal ── -->
+<div id="donate-overlay" class="donate-overlay" role="dialog" aria-modal="true" aria-label="Donate to VoxPopulAI">
+  <div class="donate-modal">
+    <div id="donate-form-content">
+      <div class="donate-modal__header">
+        <div>
+          <div class="donate-modal__title">Support VoxPopulAI</div>
+          <div class="donate-modal__subtitle">Independent AI journalism.<br>No corporate funders. No ads. Just you.</div>
+        </div>
+        <button class="donate-modal__close" data-donate-close aria-label="Close donate dialog">×</button>
+      </div>
+      <div class="donate-freq">
+        <button class="donate-freq__btn" data-freq="once">One time</button>
+        <button class="donate-freq__btn" data-freq="monthly">Monthly</button>
+      </div>
+      <div class="donate-amounts">
+        <button class="donate-amt" data-amount="1">$1</button>
+        <button class="donate-amt" data-amount="3">$3</button>
+        <button class="donate-amt" data-amount="5">$5</button>
+      </div>
+      <div class="donate-custom">
+        <span class="donate-custom__prefix">$</span>
+        <input id="donate-custom-input" type="number" min="1" placeholder="Other amount" aria-label="Custom donation amount">
+      </div>
+      <div class="donate-impact" id="donate-impact-msg">$3 covers one day of The Brief for 12 readers.</div>
+      <button class="donate-confirm" id="donate-confirm">Donate $3 →</button>
+      <div class="donate-legal">VoxPopulAI is a 501(c)(3) nonprofit. Your contribution is tax-deductible. Processed securely via Stripe.</div>
+    </div>
+    <div id="donate-thanks" class="donate-thanks" style="display:none">
+      <div class="donate-thanks__icon">✓</div>
+      <div class="donate-thanks__title">Thank you.</div>
+      <div class="donate-thanks__msg">Your support keeps VoxPopulAI independent and free for everyone. A receipt is on its way to your email.</div>
+      <button class="btn btn--amber btn--full" data-donate-close>Back to VoxPopulAI</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Brief Header ── -->
+<header style="background:var(--color-dark);padding:40px 0 32px;border-bottom:1px solid rgba(255,255,255,0.08)">
+  <div class="container">
+    <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:8px">
+      <span class="badge badge--amber" style="font-size:11px;letter-spacing:0.08em">THE BRIEF</span>
+      <span style="font-size:13px;color:rgba(255,255,255,0.45);font-family:var(--font-sans)">Wednesday, May 20, 2026</span>
+    </div>
+    <h1 style="font-family:var(--font-serif);font-size:clamp(22px,4vw,32px);font-weight:700;color:#fff;line-height:1.25;margin-bottom:10px">
+      Illinois moves to make big AI answer for failures. Here's what else you need to know today.
+    </h1>
+    <p style="font-size:14px;color:rgba(255,255,255,0.55);font-family:var(--font-sans)">4 stories · 7 min · No jargon</p>
+  </div>
+</header>
+
+<!-- ── Brief Content ── -->
+<main>
+  <section class="section section--white" aria-label="Brief stories">
+    <div class="container" style="max-width:720px">
+
+      <!-- Story 1: Illinois SB 315 — FEATURED -->
+      <article aria-label="Illinois SB 315 story" style="margin-bottom:40px;padding-bottom:40px;border-bottom:1px solid var(--color-border)">
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap">
+          <span class="badge badge--amber">Featured · Policy</span>
+          <span style="font-size:12px;color:var(--color-text-faint);font-family:var(--font-sans)">Illinois · 4 min read</span>
+        </div>
+        <h2 style="font-family:var(--font-serif);font-size:clamp(18px,3vw,24px);font-weight:700;color:var(--color-text);line-height:1.35;margin-bottom:12px">
+          Illinois SB 315 would force big AI companies to open their safety playbooks — and answer for failures within 24 hours
+        </h2>
+
+        <p style="font-size:15px;color:var(--color-text);line-height:1.75;margin-bottom:14px">
+          Illinois Senate Democrats introduced <strong>SB 315</strong> this week, a bill that would require any AI company with more than <strong>$500 million in annual revenue</strong> — think OpenAI, Google DeepMind, Anthropic, Meta AI — to publicly publish the safety frameworks they use to evaluate their models, submit to annual independent audits of their catastrophic-risk controls, and report critical safety incidents to state officials within <strong>72 hours</strong> of learning about them. If there's any risk of death or serious physical harm, that window shrinks to <strong>24 hours</strong>.
+        </p>
+
+        <p style="font-size:15px;color:var(--color-text);line-height:1.75;margin-bottom:14px">
+          The bill was introduced by Sen. Mary Edly-Allen (D-Libertyville) as part of a package of eight AI regulation bills from Senate Democrats. All but two passed out of committee unanimously — a rare show of bipartisan agreement on AI. Notably, both <strong>OpenAI and Anthropic</strong> have publicly endorsed SB 315, saying they support the transparency requirements.
+        </p>
+
+        <p style="font-size:15px;color:var(--color-text);line-height:1.75;margin-bottom:20px">
+          Illinois' bill goes further than California's and New York's comparable proposals in one key regard: the mandatory third-party audit. Under SB 315, companies can't just self-report their safety efforts — an independent external auditor must verify them annually.
+        </p>
+
+        <!-- What this means callout -->
+        <div style="background:var(--color-surface);border-left:4px solid var(--color-amber);padding:16px 20px;border-radius:0 var(--radius-md) var(--radius-md) 0;margin-bottom:20px">
+          <p style="font-size:13px;font-weight:700;color:var(--color-amber-text);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">What this means for you</p>
+          <p style="font-size:14px;color:var(--color-text);line-height:1.7;margin:0">If you live in Illinois and interact with AI — in a job application, a healthcare portal, a customer service bot — this bill creates a legal obligation for the company behind that AI to report if something goes wrong with it. You'd have a right to know. But the session ends <strong>May 31</strong>. If lawmakers don't vote before then, the bill dies until next year.</p>
+        </div>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <a href="https://capitolnewsillinois.com/news/senate-democrats-introduce-bills-to-regulate-artificial-intelligence/" target="_blank" rel="noopener" class="btn btn--amber" style="font-size:13px;padding:8px 16px">Read full coverage →</a>
+          <a href="take-action.html" class="btn btn--ghost" style="font-size:13px;padding:8px 16px">Contact your IL senator →</a>
+          <a href="policy-watch.html" class="btn btn--ghost" style="font-size:13px;padding:8px 16px">Track this bill →</a>
+        </div>
+      </article>
+
+      <!-- Story 2: AI Hiring -->
+      <article aria-label="AI hiring story" style="margin-bottom:40px;padding-bottom:40px;border-bottom:1px solid var(--color-border)">
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap">
+          <span class="badge badge--amber">At work</span>
+          <span style="font-size:12px;color:var(--color-text-faint);font-family:var(--font-sans)">2 min read</span>
+        </div>
+        <h2 style="font-family:var(--font-serif);font-size:clamp(17px,2.5vw,22px);font-weight:700;color:var(--color-text);line-height:1.35;margin-bottom:12px">
+          <a href="article.html" style="color:var(--color-text);text-decoration:none;border-bottom:1px solid var(--color-border)">AI hiring tools are quietly rejecting your resume before a human ever sees it</a>
+        </h2>
+        <p style="font-size:15px;color:var(--color-text);line-height:1.75;margin-bottom:14px">
+          Automated resume screening tools — used by more than 90% of Fortune 500 companies — filter out candidates based on keyword matches, formatting patterns, and job-history gaps before a recruiter ever opens the file. Workers with non-linear careers, employment gaps, or resumes formatted for readability rather than machine parsing are disproportionately screened out.
+        </p>
+        <div style="background:var(--color-surface);border-left:4px solid var(--color-amber);padding:16px 20px;border-radius:0 var(--radius-md) var(--radius-md) 0;margin-bottom:16px">
+          <p style="font-size:13px;font-weight:700;color:var(--color-amber-text);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">What this means for you</p>
+          <p style="font-size:14px;color:var(--color-text);line-height:1.7;margin:0">In some states you already have the right to request a human review your application. Our <a href="article.html" style="color:var(--color-link)">full article</a> has a ready-to-send email template you can use right now.</p>
+        </div>
+        <a href="article.html" class="btn btn--ghost" style="font-size:13px;padding:8px 16px">Read the full story →</a>
+      </article>
+
+      <!-- Story 3: EU AI Act -->
+      <article aria-label="EU AI Act story" style="margin-bottom:40px;padding-bottom:40px;border-bottom:1px solid var(--color-border)">
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap">
+          <span class="badge badge--teal">Policy</span>
+          <span style="font-size:12px;color:var(--color-text-faint);font-family:var(--font-sans)">3 min read</span>
+        </div>
+        <h2 style="font-family:var(--font-serif);font-size:clamp(17px,2.5vw,22px);font-weight:700;color:var(--color-text);line-height:1.35;margin-bottom:12px">
+          <a href="article.html" style="color:var(--color-text);text-decoration:none;border-bottom:1px solid var(--color-border)">The EU AI Act is fully in force — and state legislators across the US are taking notes</a>
+        </h2>
+        <p style="font-size:15px;color:var(--color-text);line-height:1.75;margin-bottom:14px">
+          The European Union's comprehensive AI regulation is now fully enforced, making it the world's first major binding AI law. It bans certain high-risk uses outright, requires transparency disclosures for AI that interacts with the public, and gives citizens the right to challenge AI-made decisions that affect their lives. Illinois, New York, and Colorado are all advancing state-level bills that borrow directly from its framework.
+        </p>
+        <div style="background:var(--color-surface);border-left:4px solid var(--color-amber);padding:16px 20px;border-radius:0 var(--radius-md) var(--radius-md) 0;margin-bottom:16px">
+          <p style="font-size:13px;font-weight:700;color:var(--color-amber-text);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">What this means for you</p>
+          <p style="font-size:14px;color:var(--color-text);line-height:1.7;margin:0">If state-level bills pass, US workers could have EU-style rights to know when AI is making decisions about them — and to contest those decisions — within two years.</p>
+        </div>
+      </article>
+
+      <!-- Story 4: Workplace AI monitoring -->
+      <article aria-label="Workplace AI monitoring story" style="margin-bottom:40px;padding-bottom:40px;border-bottom:1px solid var(--color-border)">
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap">
+          <span class="badge badge--purple">Your data</span>
+          <span style="font-size:12px;color:var(--color-text-faint);font-family:var(--font-sans)">2 min read</span>
+        </div>
+        <h2 style="font-family:var(--font-serif);font-size:clamp(17px,2.5vw,22px);font-weight:700;color:var(--color-text);line-height:1.35;margin-bottom:12px">
+          <a href="article.html" style="color:var(--color-text);text-decoration:none;border-bottom:1px solid var(--color-border)">New workplace AI tools let employers see how you use AI at your desk</a>
+        </h2>
+        <p style="font-size:15px;color:var(--color-text);line-height:1.75;margin-bottom:14px">
+          A new category of workplace monitoring tools tracks employees' AI usage in real time — which tools they open, how long they spend using them, and how their AI-assisted output compares to peers. Several major enterprise software vendors have added these features quietly, with no separate disclosure requirement under current US law.
+        </p>
+        <div style="background:var(--color-surface);border-left:4px solid var(--color-amber);padding:16px 20px;border-radius:0 var(--radius-md) var(--radius-md) 0;margin-bottom:16px">
+          <p style="font-size:13px;font-weight:700;color:var(--color-amber-text);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">What this means for you</p>
+          <p style="font-size:14px;color:var(--color-text);line-height:1.7;margin:0">Your employer can likely see which AI tools you use and for how long. Your actual prompts and outputs may be protected depending on your state — but there's no federal law requiring them to tell you they're watching.</p>
+        </div>
+      </article>
+
+      <!-- Action bar -->
+      <div class="action-bar" role="complementary" aria-label="Today's action">
+        <span class="action-bar__label">Action today</span>
+        <div class="action-bar__divider"></div>
+        <span class="action-bar__text">Illinois residents: Contact your senator to support SB 315 before May 31</span>
+        <a href="take-action.html" class="action-bar__cta">Use our template →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Archive strip ── -->
+  <section style="background:var(--color-surface);padding:24px 0;border-top:1px solid var(--color-border)">
+    <div class="container" style="max-width:720px">
+      <p style="font-size:13px;color:var(--color-text-muted);font-family:var(--font-sans);margin-bottom:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em">Previous briefs</p>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:4px">
+          <span style="font-size:14px;color:var(--color-text)">Tuesday, May 19 — Lawmakers push back on facial recognition in schools</span>
+          <span style="font-size:12px;color:var(--color-text-faint)">4 stories</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:4px">
+          <span style="font-size:14px;color:var(--color-text)">Monday, May 18 — FTC opens AI consumer complaint portal</span>
+          <span style="font-size:12px;color:var(--color-text-faint)">3 stories</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:4px">
+          <span style="font-size:14px;color:var(--color-text)">Friday, May 15 — Colorado's AI discrimination law takes effect</span>
+          <span style="font-size:12px;color:var(--color-text-faint)">5 stories</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Newsletter ── -->
+  <section class="newsletter" id="newsletter" aria-label="Newsletter signup">
+    <div class="container">
+      <h2 class="newsletter__title">Get the Brief every morning</h2>
+      <p class="newsletter__sub">5 minutes. Plain language. What AI means for you — today.</p>
+      <form class="newsletter__form" action="#" method="post" aria-label="Email signup form">
+        <input class="newsletter__input" type="email" name="email" placeholder="your@email.com" required aria-label="Your email address">
+        <button type="submit" class="btn btn--amber">Subscribe</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<!-- ── Footer ── -->
+<footer class="footer" role="contentinfo">
+  <span class="footer__note">voxpopulai.org — nonprofit · independent · no AI corporate funding</span>
+  <nav class="footer__links" aria-label="Footer navigation">
+    <a href="about.html">About</a>
+    <a href="editorial-policy.html">Editorial policy</a>
+    <a href="how-we-source.html">How we source</a>
+    <a href="corrections.html">Corrections</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
