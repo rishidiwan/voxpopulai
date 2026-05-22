@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Your AI Starter Guide — From first chat to future-ready. A plain-language guide for high school students navigating the age of AI.">
+  <title>Student AI Guide — VoxPopulAI</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230F1923'/><text y='24' x='4' font-size='18' fill='%23EF9F27' font-family='sans-serif'>AI</text></svg>">
+  <style>
+    /* ── Guide-specific styles ── */
+    .guide-hero {
+      background: var(--color-dark);
+      color: #fff;
+      padding: 64px 0 48px;
+      text-align: center;
+    }
+    .guide-hero__eyebrow {
+      display: inline-block;
+      background: var(--color-amber);
+      color: var(--color-dark);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    .guide-hero__title {
+      font-family: var(--font-serif);
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+    .guide-hero__title span { color: var(--color-amber); }
+    .guide-hero__sub {
+      font-size: 16px;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.7;
+      max-width: 560px;
+      margin: 0 auto 28px;
+    }
+    .guide-toc {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 8px;
+    }
+    .guide-toc a {
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.85);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 12px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .guide-toc a:hover { background: rgba(239,159,39,0.25); color: var(--color-amber); border-color: var(--color-amber); }
+
+    /* ── Section titles with step numbers ── */
+    .guide-step {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .guide-step__num {
+      width: 36px;
+      height: 36px;
+      background: var(--color-amber);
+      color: var(--color-dark);
+      border-radius: 50%;
+      font-size: 15px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .guide-step__title {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--color-text);
+      margin: 0;
+    }
+
+    /* ── Info boxes ── */
+    .info-box {
+      background: #fff8ec;
+      border: 1px solid #fde2a3;
+      border-left: 4px solid var(--color-amber);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+    .info-box--dark {
+      background: var(--color-dark);
+      color: #fff;
+      border-left-color: var(--color-amber);
+      border-color: rgba(239,159,39,0.3);
+    }
+    .info-box__label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--color-amber);
+      margin-bottom: 6px;
+    }
+    .info-box p { font-size: 14px; line-height: 1.7; margin: 0; }
+
+    /* ── Callout grid ── */
+    .callout-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .callout-card {
+      background: var(--color-surface);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      border-top: 3px solid var(--color-amber);
+    }
+    .callout-card__icon { font-size: 24px; margin-bottom: 10px; }
+    .callout-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 8px; color: var(--color-text); }
+    .callout-card p { font-size: 13px; color: var(--color-text-muted); line-height: 1.6; margin: 0; }
+
+    /* ── Career cards ── */
+    .career-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .career-card {
+      background: #fff;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .career-card__header {
+      background: var(--color-dark);
+      color: #fff;
+      padding: 16px 18px;
+    }
+    .career-card__emoji { font-size: 22px; }
+    .career-card__field { font-size: 13px; font-weight: 700; margin-top: 6px; color: #fff; }
+    .career-card__body { padding: 16px 18px; }
+    .career-card__now, .career-card__future {
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--color-text-muted);
+      margin-bottom: 10px;
+    }
+    .career-card__now strong, .career-card__future strong {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .career-card__now strong { color: var(--color-amber); }
+    .career-card__future strong { color: #4caf80; }
+    .career-card__skill {
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--color-surface);
+      color: var(--color-text);
+      border-radius: 12px;
+      padding: 3px 10px;
+      display: inline-block;
+      margin: 2px 3px 0 0;
+    }
+
+    /* ── Tip list ── */
+    .tip-list { list-style: none; padding: 0; margin: 20px 0; }
+    .tip-list li {
+      display: flex;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--color-border);
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--color-text);
+    }
+    .tip-list li:last-child { border-bottom: none; }
+    .tip-list__icon {
+      font-size: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .tip-list strong { color: var(--color-dark); }
+
+    /* ── Infographic containers ── */
+    .infographic {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin: 28px 0;
+    }
+    .infographic svg { display: block; width: 100%; height: auto; }
+
+    @media (max-width: 600px) {
+      .guide-hero { padding: 48px 0 36px; }
+      .callout-grid { grid-template-columns: 1fr; }
+      .career-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <a href="index.html" class="nav__logo" aria-label="VoxPopulAI home">
+    VOX POPUL<span class="nav__logo-ai">AI</span>
+  </a>
+  <ul class="nav__links" role="list">
+    <li><a href="brief.html">The Brief</a></li>
+    <li><a href="index.html#understand">Understand</a></li>
+    <li><a href="index.html#impact">Your Impact</a></li>
+    <li><a href="take-action.html">Take Action</a></li>
+    <li><a href="policy-watch.html">Policy Watch</a></li>
+    <li><a href="index.html#community">Community</a></li>
+  </ul>
+  <div class="nav__right">
+    <button class="btn--donate" data-donate-open aria-label="Donate to VoxPopulAI">Donate</button>
+    <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="nav__mobile-menu" role="navigation" aria-label="Mobile navigation">
+  <a href="brief.html">The Brief</a>
+  <a href="index.html#understand">Understand</a>
+  <a href="index.html#impact">Your Impact</a>
+  <a href="take-action.html">Take Action</a>
+  <a href="policy-watch.html">Policy Watch</a>
+  <a href="index.html#community">Community</a>
+  <a href="#" class="donate-link" data-donate-open>Donate — $1 · $3 · $5</a>
+</div>
+
+<!-- ── Donate Modal ── -->
+<div id="donate-overlay" class="donate-overlay" role="dialog" aria-modal="true" aria-label="Donate to VoxPopulAI">
+  <div class="donate-modal">
+    <div id="donate-form-content">
+      <div class="donate-modal__header">
+        <div>
+          <div class="donate-modal__title">Support VoxPopulAI</div>
+          <div class="donate-modal__subtitle">Independent AI journalism.<br>No corporate funders. No ads. Just you.</div>
+        </div>
+        <button class="donate-modal__close" data-donate-close aria-label="Close donate dialog">×</button>
+      </div>
+      <div class="donate-freq">
+        <button class="donate-freq__btn" data-freq="once">One time</button>
+        <button class="donate-freq__btn" data-freq="monthly">Monthly</button>
+      </div>
+      <div class="donate-amounts">
+        <button class="donate-amt" data-amount="1">$1</button>
+        <button class="donate-amt" data-amount="3">$3</button>
+        <button class="donate-amt" data-amount="5">$5</button>
+      </div>
+      <div class="donate-custom">
+        <span class="donate-custom__prefix">$</span>
+        <input id="donate-custom-input" type="number" min="1" placeholder="Other amount" aria-label="Custom donation amount">
+      </div>
+      <div class="donate-impact" id="donate-impact-msg">$3 covers one day of The Brief for 12 readers.</div>
+      <button class="donate-confirm" id="donate-confirm">Donate $3 →</button>
+      <div class="donate-legal">VoxPopulAI is a 501(c)(3) nonprofit. Your contribution is tax-deductible. Processed securely via Stripe.</div>
+    </div>
+    <div id="donate-thanks" class="donate-thanks" style="display:none">
+      <div class="donate-thanks__icon">✓</div>
+      <div class="donate-thanks__title">Thank you.</div>
+      <div class="donate-thanks__msg">Your support keeps VoxPopulAI independent and free for everyone. A receipt is on its way to your email.</div>
+      <button class="btn btn--amber btn--full" data-donate-close>Back to VoxPopulAI</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Hero ── -->
+<header class="guide-hero" role="banner">
+  <div class="container">
+    <span class="guide-hero__eyebrow">For High School Students</span>
+    <h1 class="guide-hero__title">Your <span>AI</span> Starter Guide.<br>From first chat to future-ready.</h1>
+    <p class="guide-hero__sub">AI is reshaping everything — the economy, the climate, your future career. Here's how to understand it, use it well, and build skills that will matter in 5–10 years.</p>
+    <nav class="guide-toc" aria-label="Guide sections">
+      <a href="#chat-vs-search">Chat vs. Search</a>
+      <a href="#context-windows">Context Windows + AI's Footprint</a>
+      <a href="#skills-ladder">Skills Ladder</a>
+      <a href="#careers">Your Career</a>
+      <a href="#future">5–10 Year Outlook</a>
+      <a href="#start-today">Start Today</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ──────────────────────────────────────────
+     SECTION 1 — AI Chat vs. Google Search
+     ────────────────────────────────────────── -->
+<section class="section section--white" id="chat-vs-search" aria-labelledby="s1-title">
+  <div class="container">
+    <div class="guide-step">
+      <div class="guide-step__num">1</div>
+      <h2 class="guide-step__title" id="s1-title">Why AI chat beats a search engine — and when it doesn't</h2>
+    </div>
+
+    <p style="font-size:15px;line-height:1.75;color:var(--color-text-muted);margin-bottom:24px">
+      You've probably Googled things your whole life. AI chat is something fundamentally different — and once you understand the gap, you'll never approach a research or writing task the same way again.
+    </p>
+
+    <!-- Infographic: Chat vs Search comparison -->
+    <div class="infographic" aria-label="AI Chat vs Google Search comparison infographic">
+      <svg viewBox="0 0 720 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Side-by-side comparison of Google Search and AI Chat">
+        <defs>
+          <linearGradient id="darkGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0F1923"/>
+            <stop offset="100%" stop-color="#192534"/>
+          </linearGradient>
+        </defs>
+        <!-- Background -->
+        <rect width="720" height="400" fill="#f7f8fa"/>
+
+        <!-- Left panel: Google Search -->
+        <rect x="20" y="20" width="320" height="360" rx="12" fill="#fff" stroke="#e5e7eb" stroke-width="1.5"/>
+        <rect x="20" y="20" width="320" height="52" rx="12" fill="#4285F4"/>
+        <rect x="20" y="56" width="320" height="16" rx="0" fill="#4285F4"/>
+        <text x="180" y="52" text-anchor="middle" font-family="system-ui,sans-serif" font-size="16" font-weight="700" fill="#fff">🔍 Google Search</text>
+
+        <!-- Search result links -->
+        <g font-family="system-ui,sans-serif">
+          <text x="44" y="100" font-size="11" fill="#888">You type: "AI environmental impact"</text>
+          <line x1="44" y1="110" x2="316" y2="110" stroke="#eee" stroke-width="1"/>
+
+          <text x="44" y="132" font-size="12" font-weight="600" fill="#1a0dab">Artificial Intelligence's Environmental Impact | MIT</text>
+          <text x="44" y="148" font-size="11" fill="#666">news.mit.edu › 2023 › ai-environment-computing...</text>
+          <text x="44" y="163" font-size="11" fill="#555">Training a single large AI model can emit as much carbon as five cars over their entire lifetimes. Researchers say...</text>
+
+          <line x1="44" y1="176" x2="316" y2="176" stroke="#eee" stroke-width="1"/>
+          <text x="44" y="196" font-size="12" font-weight="600" fill="#1a0dab">AI's Massive Energy Use Is a Problem | Wired</text>
+          <text x="44" y="212" font-size="11" fill="#666">wired.com › story › ai-energy-environment-2024...</text>
+          <text x="44" y="227" font-size="11" fill="#555">Data centers powering AI now consume more electricity than some small countries. Here's why it's getting worse.</text>
+
+          <line x1="44" y1="240" x2="316" y2="240" stroke="#eee" stroke-width="1"/>
+          <text x="44" y="260" font-size="12" font-weight="600" fill="#1a0dab">How Much Water Does ChatGPT Use? | New Scientist</text>
+          <text x="44" y="276" font-size="11" fill="#666">newscientist.com › article › ai-water-usage...</text>
+          <text x="44" y="291" font-size="11" fill="#555">Microsoft and Google's AI data centers are consuming billions of gallons of water for cooling. Studies suggest a...</text>
+        </g>
+
+        <!-- Bottom outcome note -->
+        <rect x="36" y="308" width="288" height="52" rx="8" fill="#fff3e0" stroke="#fbbf24" stroke-width="1.5"/>
+        <text x="180" y="328" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#92400e">What you get:</text>
+        <text x="180" y="343" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#92400e">Scattered articles. You piece it together.</text>
+        <text x="180" y="356" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#92400e">Time: 20–40 minutes. Still no clear picture.</text>
+
+        <!-- Right panel: AI Chat -->
+        <rect x="380" y="20" width="320" height="360" rx="12" fill="url(#darkGrad)" stroke="#2a3a4a" stroke-width="1.5"/>
+        <rect x="380" y="20" width="320" height="52" rx="12" fill="#EF9F27"/>
+        <rect x="380" y="56" width="320" height="16" rx="0" fill="#EF9F27"/>
+        <text x="540" y="52" text-anchor="middle" font-family="system-ui,sans-serif" font-size="16" font-weight="700" fill="#0F1923">💬 AI Chat</text>
+
+        <!-- Chat message -->
+        <rect x="400" y="82" width="280" height="52" rx="8" fill="rgba(255,255,255,0.12)"/>
+        <text x="416" y="98" font-family="system-ui,sans-serif" font-size="11" fill="rgba(255,255,255,0.6)">You type:</text>
+        <text x="416" y="113" font-family="system-ui,sans-serif" font-size="11" fill="#fff">"I care about climate. Explain the real</text>
+        <text x="416" y="126" font-family="system-ui,sans-serif" font-size="11" fill="#fff">environmental cost of AI — energy, water,</text>
+
+        <!-- AI response bubble -->
+        <rect x="400" y="146" width="280" height="160" rx="8" fill="rgba(239,159,39,0.12)" stroke="rgba(239,159,39,0.3)" stroke-width="1"/>
+        <text x="416" y="164" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#EF9F27">AI responds:</text>
+        <text x="416" y="181" font-family="system-ui,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.85)">Great question. Three layers to understand:</text>
+        <text x="416" y="197" font-family="system-ui,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.75)">1. Training: GPT-4 training ≈ 500 tons CO₂</text>
+        <text x="416" y="212" font-family="system-ui,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.75)">2. Running: each query uses ~10x a Google</text>
+        <text x="416" y="227" font-family="system-ui,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.75)">   search in energy</text>
+        <text x="416" y="242" font-family="system-ui,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.75)">3. Water: ~500ml per conversation for cooling</text>
+        <text x="416" y="258" font-family="system-ui,sans-serif" font-size="10.5" fill="#EF9F27">Want me to compare this to other tech, or</text>
+        <text x="416" y="272" font-family="system-ui,sans-serif" font-size="10.5" fill="#EF9F27">explain what's being done about it?</text>
+        <text x="416" y="291" font-family="system-ui,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.5)">↳ Ask follow-ups. It holds the full context.</text>
+
+        <!-- Bottom outcome note -->
+        <rect x="396" y="308" width="288" height="52" rx="8" fill="rgba(239,159,39,0.15)" stroke="rgba(239,159,39,0.4)" stroke-width="1.5"/>
+        <text x="540" y="328" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#EF9F27">What you get:</text>
+        <text x="540" y="343" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="rgba(255,255,255,0.8)">A synthesized answer to YOUR question.</text>
+        <text x="540" y="356" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="rgba(255,255,255,0.8)">Time: 2 minutes. With follow-ups: 5.</text>
+
+        <!-- VS badge -->
+        <circle cx="360" cy="200" r="22" fill="#0F1923" stroke="#EF9F27" stroke-width="2"/>
+        <text x="360" y="206" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" font-weight="800" fill="#EF9F27">VS</text>
+      </svg>
+    </div>
+
+    <div class="info-box">
+      <div class="info-box__label">The key difference</div>
+      <p>A search engine finds pages that might have what you need. An AI chat <strong>synthesizes an answer to your specific situation</strong>. When your question has context — your age, your goal, your constraints — AI can factor all of that in. Search can't.</p>
+    </div>
+
+    <div class="callout-grid">
+      <div class="callout-card">
+        <div class="callout-card__icon">🔍</div>
+        <h4>Use Google when…</h4>
+        <p>You need a specific fact, a recent news story, a business's address, or any source you need to actually cite. Search finds pages; it doesn't synthesize them.</p>
+      </div>
+      <div class="callout-card">
+        <div class="callout-card__icon">💬</div>
+        <h4>Use AI chat when…</h4>
+        <p>You need to understand something, draft something, work through a problem, get feedback on your writing, or brainstorm ideas. The more context you give, the better the answer.</p>
+      </div>
+      <div class="callout-card">
+        <div class="callout-card__icon">⚠️</div>
+        <h4>Always verify facts</h4>
+        <p>AI can confidently state things that are wrong (called "hallucinations"). This is especially important on topics like environmental data — always cross-check specific numbers (energy use, carbon figures, water stats) against primary sources like university research or government reports.</p>
+      </div>
+    </div>
+
+    <!-- Try this now callout -->
+    <div class="info-box info-box--dark">
+      <div class="info-box__label">Try this right now</div>
+      <p style="color:rgba(255,255,255,0.85)">Open <strong style="color:var(--color-amber)">claude.ai</strong> or <strong style="color:var(--color-amber)">chatgpt.com</strong> (both free). Type: <em style="color:var(--color-amber)">"I care about climate change. Walk me through the real environmental cost of AI — energy, water, and carbon — compared to other things I do online. Be specific with numbers, and tell me what companies and researchers are doing about it."</em> Notice how you get a synthesized answer, not ten tabs to read.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ──────────────────────────────────────────
+     SECTION 2 — Context Windows
+     ────────────────────────────────────────── -->
+<section class="section section--surface" id="context-windows" aria-labelledby="s2-title">
+  <div class="container">
+    <div class="guide-step">
+      <div class="guide-step__num">2</div>
+      <h2 class="guide-step__title" id="s2-title">Context windows: the superpower most people don't use</h2>
+    </div>
+
+    <p style="font-size:15px;line-height:1.75;color:var(--color-text-muted);margin-bottom:24px">
+      "Context window" sounds technical, but the concept is simple — and understanding it separates people who get mediocre results from AI and people who get genuinely useful results.
+    </p>
+
+    <!-- Infographic: Context Window explainer -->
+    <div class="infographic" aria-label="Context window explanation infographic">
+      <svg viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Visual explanation of AI context windows">
+        <rect width="720" height="340" fill="#f7f8fa"/>
+
+        <!-- Title -->
+        <text x="360" y="32" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" font-weight="700" fill="#0F1923">What's in the AI's "memory" during your conversation?</text>
+
+        <!-- ── Bad example: Short context ── -->
+        <rect x="30" y="52" width="308" height="268" rx="12" fill="#fff" stroke="#e5e7eb" stroke-width="1.5"/>
+        <rect x="30" y="52" width="308" height="40" rx="12" fill="#ef4444"/>
+        <rect x="30" y="77" width="308" height="15" rx="0" fill="#ef4444"/>
+        <text x="184" y="78" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="700" fill="#fff">❌ Weak prompt — no context</text>
+
+        <rect x="50" y="106" width="264" height="30" rx="6" fill="rgba(239,68,68,0.08)" stroke="rgba(239,68,68,0.2)" stroke-width="1"/>
+        <text x="182" y="125" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#555">"Is AI bad for the environment?"</text>
+
+        <text x="50" y="162" font-family="system-ui,sans-serif" font-size="10.5" fill="#888">AI context window contains:</text>
+        <rect x="50" y="170" width="268" height="22" rx="4" fill="#f3f4f6"/>
+        <text x="60" y="185" font-family="system-ui,sans-serif" font-size="10" fill="#aaa">[ just this one sentence — nothing else ]</text>
+
+        <text x="184" y="218" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#888">AI must guess everything:</text>
+        <text x="184" y="235" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#aaa">What do you already know?</text>
+        <text x="184" y="251" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#aaa">Energy? Water? Hardware? Carbon?</text>
+        <text x="184" y="267" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#aaa">What depth are you looking for?</text>
+
+        <rect x="50" y="284" width="268" height="24" rx="6" fill="#fee2e2"/>
+        <text x="184" y="300" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10.5" font-weight="600" fill="#991b1b">Result: Vague overview. You already knew this.</text>
+
+        <!-- ── Good example: Rich context ── -->
+        <rect x="382" y="52" width="308" height="268" rx="12" fill="#fff" stroke="#e5e7eb" stroke-width="1.5"/>
+        <rect x="382" y="52" width="308" height="40" rx="12" fill="#16a34a"/>
+        <rect x="382" y="77" width="308" height="15" rx="0" fill="#16a34a"/>
+        <text x="536" y="78" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="700" fill="#fff">✅ Rich prompt — full context</text>
+
+        <rect x="402" y="100" width="268" height="114" rx="6" fill="rgba(22,163,74,0.07)" stroke="rgba(22,163,74,0.25)" stroke-width="1"/>
+        <text x="418" y="116" font-family="system-ui,sans-serif" font-size="10" fill="#555">"I care about climate change and I use AI tools</text>
+        <text x="418" y="130" font-family="system-ui,sans-serif" font-size="10" fill="#555">daily. Break down AI's real environmental cost:</text>
+        <text x="418" y="144" font-family="system-ui,sans-serif" font-size="10" fill="#555">energy per query, water for cooling, carbon from</text>
+        <text x="418" y="158" font-family="system-ui,sans-serif" font-size="10" fill="#555">training. Compare to streaming video or a flight.</text>
+        <text x="418" y="172" font-family="system-ui,sans-serif" font-size="10" fill="#555">Be specific with numbers. Then tell me what's</text>
+        <text x="418" y="186" font-family="system-ui,sans-serif" font-size="10" fill="#555">actually being done — or not — to fix it."</text>
+        <text x="418" y="204" font-family="system-ui,sans-serif" font-size="9" fill="#aaa">[Follow up: "Now compare OpenAI vs Google's approach"]</text>
+
+        <text x="536" y="236" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#555">AI context window contains:</text>
+        <text x="536" y="252" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10.5" fill="#16a34a">Your values · Specific angles · Comparisons</text>
+        <text x="536" y="266" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10.5" fill="#16a34a">Depth wanted · What to include</text>
+
+        <rect x="402" y="284" width="268" height="24" rx="6" fill="#dcfce7"/>
+        <text x="536" y="300" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10.5" font-weight="600" fill="#166534">Result: Specific, nuanced, actually surprising.</text>
+      </svg>
+    </div>
+
+    <div class="info-box">
+      <div class="info-box__label">What "context window" actually means</div>
+      <p>Every AI conversation has a window — imagine it as a sheet of paper the AI can see at one time. Everything you've typed in the conversation, all its responses, any documents you've pasted — it all goes in that window. <strong>The more relevant context you load into that window, the better the AI can help you.</strong> Modern AI systems have very large context windows — some can hold entire textbooks — so don't be shy about giving background.</p>
+    </div>
+
+    <h3 style="font-size:17px;font-weight:700;color:var(--color-text);margin:28px 0 12px">The context window in practice: AI's real environmental cost</h3>
+
+    <p style="font-size:14px;line-height:1.75;color:var(--color-text-muted);margin-bottom:20px">This is a topic most AI companies don't advertise. Using AI chat to understand it is a perfect example of where chat beats search — and where loading your context window pays off.</p>
+
+    <!-- Environmental Impact Infographic -->
+    <div class="infographic" aria-label="AI environmental impact by the numbers">
+      <svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Key statistics on AI's environmental footprint">
+        <rect width="720" height="260" fill="#0F1923"/>
+        <text x="360" y="30" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="700" fill="#fff">AI's Environmental Footprint — What the Numbers Actually Say</text>
+
+        <!-- Card 1: Energy -->
+        <rect x="20" y="48" width="160" height="186" rx="10" fill="#192534" stroke="rgba(239,159,39,0.3)" stroke-width="1"/>
+        <text x="100" y="74" text-anchor="middle" font-family="system-ui,sans-serif" font-size="22" fill="#EF9F27">⚡</text>
+        <text x="100" y="102" text-anchor="middle" font-family="system-ui,sans-serif" font-size="22" font-weight="800" fill="#EF9F27">10×</text>
+        <text x="100" y="120" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="rgba(255,255,255,0.6)">more energy per query</text>
+        <text x="100" y="133" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="rgba(255,255,255,0.6)">than a Google search</text>
+        <line x1="40" y1="146" x2="160" y2="146" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+        <text x="100" y="164" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.5)">A single ChatGPT query</text>
+        <text x="100" y="178" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.5)">uses ~0.001–0.01 kWh.</text>
+        <text x="100" y="192" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.5)">At billions of queries/day,</text>
+        <text x="100" y="206" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.5)">that scales fast.</text>
+        <text x="100" y="224" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="rgba(255,255,255,0.3)">Source: Goldman Sachs, 2024</text>
+
+        <!-- Card 2: Water -->
+        <rect x="195" y="48" width="160" height="186" rx="10" fill="#192534" stroke="rgba(239,159,39,0.3)" stroke-width="1"/>
+        <text x="275" y="74" text-anchor="middle" font-family="system-ui,sans-serif" font-size="22" fill="#4db8ff">💧</text>
+        <text x="275" y="102" text-anchor="middle" font-family="system-ui,sans-serif" font-size="22" font-weight="800" fill="#4db8ff">500ml</text>
+        <text x="275" y="120" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="rgba(255,255,255,0.6)">water per conversation</text>
+        <text x="275" y="133" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="rgba(255,255,255,0.6)">for data center cooling</text>
+        <line x1="215" y1="146" x2="335" y2="146" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+        <text x="275" y="164" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.5)">Microsoft's AI data centers</text>
+        <text x="275" y="178" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.5)">consumed 6.4 billion liters</text>
+        <text x="275" y="192" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.5)">of water in 2022 — up 34%</text>
+        <text x="275" y="206" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.5)">from the prior year.</text>
+        <text x="275" y="224" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="rgba(255,255,255,0.3)">Source: UC Riverside study, 2023</text>
+
+        <!-- Card 3: Training carbon -->
+        <rect x="370" y="48" width="160" height="186" rx="10" fill="#192534" stroke="rgba(239,159,39,0.3)" stroke-width="1"/>
+        <text x="450" y="74" text-anchor="middle" font-family="system-ui,sans-serif" font-size="22" fill="#ff7b54">🌡️</text>
+        <text x="450" y="102" text-anchor="middle" font-family="system-ui,sans-serif" font-size="20" font-weight="800" fill="#ff7b54">500t CO₂</text>
+        <text x="450" y="120" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="rgba(255,255,255,0.6)">estimated to train GPT-4</text>
+        <text x="450" y="133" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="rgba(255,255,255,0.6)">(one model, once)</text>
+        <line x1="390" y1="146" x2="510" y2="146" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+        <text x="450" y="164" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.5)">That's ≈ 100 round-trip</text>
+        <text x="450" y="178" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.5)">flights NYC→London.</text>
+        <text x="450" y="192" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.5)">New models are trained</text>
+        <text x="450" y="206" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.5)">repeatedly as they improve.</text>
+        <text x="450" y="224" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="rgba(255,255,255,0.3)">Source: Epoch AI estimates, 2024</text>
+
+        <!-- Card 4: Data centers -->
+        <rect x="545" y="48" width="155" height="186" rx="10" fill="#192534" stroke="rgba(239,159,39,0.3)" stroke-width="1"/>
+        <text x="622" y="74" text-anchor="middle" font-family="system-ui,sans-serif" font-size="22" fill="#a78bfa">🏭</text>
+        <text x="622" y="102" text-anchor="middle" font-family="system-ui,sans-serif" font-size="20" font-weight="800" fill="#a78bfa">1–2%</text>
+        <text x="622" y="120" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="rgba(255,255,255,0.6)">global electricity now</text>
+        <text x="622" y="133" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="rgba(255,255,255,0.6)">consumed by data centers</text>
+        <line x1="565" y1="146" x2="685" y2="146" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+        <text x="622" y="164" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.5)">Projected to reach 3–4%</text>
+        <text x="622" y="178" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.5)">by 2030 as AI workloads</text>
+        <text x="622" y="192" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.5)">grow. New nuclear and</text>
+        <text x="622" y="206" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.5)">solar deals are being made.</text>
+        <text x="622" y="224" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="rgba(255,255,255,0.3)">Source: IEA, 2024</text>
+      </svg>
+    </div>
+
+    <div class="info-box info-box--dark" style="margin-top:24px">
+      <div class="info-box__label">The honest picture</div>
+      <p style="color:rgba(255,255,255,0.85)">AI companies publish sustainability reports — but these are often incomplete. <strong style="color:var(--color-amber)">Training costs are disclosed selectively. Inference (running the model) costs are rarely reported at all.</strong> Microsoft, Google, and Amazon have all seen their carbon emissions rise since launching AI products, despite pledges to go carbon-neutral. This is a live accountability issue — and it's one students are uniquely positioned to push on.</p>
+    </div>
+
+    <h3 style="font-size:16px;font-weight:700;color:var(--color-text);margin:28px 0 12px">How to use context windows to actually dig into this</h3>
+
+    <ul class="tip-list">
+      <li>
+        <span class="tip-list__icon">🔗</span>
+        <div><strong>Build on each response instead of starting over.</strong> Ask "break down AI's energy use" → get an answer → then ask "now compare that to streaming video" → then "what's being done about it?" Each follow-up adds to what's already in the window. One thread = deep understanding.</div>
+      </li>
+      <li>
+        <span class="tip-list__icon">📋</span>
+        <div><strong>Paste in an article or report and ask questions about it.</strong> Find a tech company's sustainability report or a research paper. Paste the text and ask: "What's this report not telling me? What claims can't I verify here?" The AI will engage critically with the material.</div>
+      </li>
+      <li>
+        <span class="tip-list__icon">⚖️</span>
+        <div><strong>Ask for both sides explicitly.</strong> "Give me the strongest argument that AI's environmental cost is worth it — then give me the strongest counterargument." Getting both in one window lets you compare them directly and form your own view.</div>
+      </li>
+      <li>
+        <span class="tip-list__icon">🎯</span>
+        <div><strong>State what you already know.</strong> "I already know AI uses a lot of energy. What I don't understand is how training cost compares to inference cost over a model's lifetime." Telling the AI your starting point skips the basics and gets to what's actually new to you.</div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- ──────────────────────────────────────────
+     SECTION 3 — The AI Skills Ladder
+     ────────────────────────────────────────── -->
+<section class="section section--white" id="skills-ladder" aria-labelledby="s3-title">
+  <div class="container">
+    <div class="guide-step">
+      <div class="guide-step__num">3</div>
+      <h2 class="guide-step__title" id="s3-title">The AI skills ladder: where you are and where to go</h2>
+    </div>
+
+    <p style="font-size:15px;line-height:1.75;color:var(--color-text-muted);margin-bottom:28px">
+      Most people are still on the first rung. Each step up multiplies your productivity — and your edge in college applications, internships, and careers.
+    </p>
+
+    <!-- Infographic: Skills Ladder -->
+    <div class="infographic" aria-label="AI skills ladder infographic">
+      <svg viewBox="0 0 720 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Five-rung ladder showing AI skill progression from beginner to expert">
+        <rect width="720" height="480" fill="#f7f8fa"/>
+
+        <!-- Ladder rail lines -->
+        <line x1="160" y1="40" x2="160" y2="450" stroke="#d1d5db" stroke-width="3" stroke-linecap="round"/>
+        <line x1="280" y1="40" x2="280" y2="450" stroke="#d1d5db" stroke-width="3" stroke-linecap="round"/>
+
+        <!-- ── Rung 5 — Expert ── -->
+        <rect x="140" y="50" width="160" height="14" rx="4" fill="#EF9F27"/>
+        <rect x="320" y="36" width="370" height="56" rx="10" fill="#0F1923"/>
+        <text x="340" y="56" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#EF9F27">🏆 Level 5 — Builder / Creator</text>
+        <text x="340" y="72" font-family="system-ui,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.75)">Build AI-powered tools, automations &amp; workflows for others.</text>
+        <text x="340" y="86" font-family="system-ui,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.6)">Use APIs, prompt engineering, custom agents. Rare skill — high value.</text>
+
+        <!-- ── Rung 4 — Advanced ── -->
+        <rect x="140" y="142" width="160" height="14" rx="4" fill="#EF9F27"/>
+        <rect x="320" y="128" width="370" height="56" rx="10" fill="#1a2d40"/>
+        <text x="340" y="148" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#EF9F27">⚡ Level 4 — Systems Thinker</text>
+        <text x="340" y="164" font-family="system-ui,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.75)">Chain multiple AI steps. Use AI for research, analysis &amp; synthesis.</text>
+        <text x="340" y="178" font-family="system-ui,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.6)">Evaluate AI output critically. Know when it's wrong. Verify claims.</text>
+
+        <!-- ── Rung 3 — Intermediate ── -->
+        <rect x="140" y="234" width="160" height="14" rx="4" fill="#EF9F27"/>
+        <rect x="320" y="220" width="370" height="56" rx="10" fill="#253d55"/>
+        <text x="340" y="240" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#EF9F27">🔧 Level 3 — Power User</text>
+        <text x="340" y="256" font-family="system-ui,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.75)">Craft detailed prompts. Use role-play, personas &amp; multi-step tasks.</text>
+        <text x="340" y="270" font-family="system-ui,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.6)">Upload documents, iterate on outputs. Use AI across tools &amp; apps.</text>
+
+        <!-- ── Rung 2 — Developing ── -->
+        <rect x="140" y="326" width="160" height="14" rx="4" fill="#EF9F27"/>
+        <rect x="320" y="312" width="370" height="56" rx="10" fill="#2e4a64"/>
+        <text x="340" y="332" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#EF9F27">📝 Level 2 — Intentional User</text>
+        <text x="340" y="348" font-family="system-ui,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.75)">Use AI for writing, feedback, summaries, and explaining ideas.</text>
+        <text x="340" y="362" font-family="system-ui,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.6)">Give it context. Have back-and-forth conversations. Refine outputs.</text>
+
+        <!-- ── Rung 1 — Beginner ── -->
+        <rect x="140" y="418" width="160" height="14" rx="4" fill="#EF9F27"/>
+        <rect x="320" y="404" width="370" height="56" rx="10" fill="#3a5a7a"/>
+        <text x="340" y="424" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#EF9F27">🌱 Level 1 — Curious Beginner</text>
+        <text x="340" y="440" font-family="system-ui,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.75)">Ask AI basic questions. Use it like a smarter search engine.</text>
+        <text x="340" y="454" font-family="system-ui,sans-serif" font-size="10.5" fill="rgba(255,255,255,0.6)">One-shot prompts. Sometimes disappointed by vague answers.</text>
+
+        <!-- Level labels on left -->
+        <text x="155" y="46" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#EF9F27">5</text>
+        <text x="155" y="138" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#EF9F27">4</text>
+        <text x="155" y="230" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#EF9F27">3</text>
+        <text x="155" y="322" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#EF9F27">2</text>
+        <text x="155" y="414" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#EF9F27">1</text>
+
+        <!-- Arrow -->
+        <text x="88" y="250" font-family="system-ui,sans-serif" font-size="28" fill="#EF9F27" opacity="0.4">↑</text>
+
+        <!-- "Most students" badge -->
+        <rect x="30" y="370" width="110" height="24" rx="12" fill="#EF9F27"/>
+        <text x="85" y="385" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" font-weight="700" fill="#0F1923">Most students today →</text>
+        <line x1="140" y1="382" x2="320" y2="355" stroke="#EF9F27" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.6"/>
+      </svg>
+    </div>
+
+    <div class="info-box">
+      <div class="info-box__label">Where to focus your energy</div>
+      <p>Most high schoolers are at Level 1–2. Getting to Level 3 — giving rich context, iterating on drafts, using AI across different tools — will put you ahead of most college students and entry-level workers. Levels 4–5 are where the real career differentiation happens, but they're also very buildable skills over the next few years.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ──────────────────────────────────────────
+     SECTION 4 — Your Career Field
+     ────────────────────────────────────────── -->
+<section class="section section--surface" id="careers" aria-labelledby="s4-title">
+  <div class="container">
+    <div class="guide-step">
+      <div class="guide-step__num">4</div>
+      <h2 class="guide-step__title" id="s4-title">What AI means for your career path</h2>
+    </div>
+
+    <p style="font-size:15px;line-height:1.75;color:var(--color-text-muted);margin-bottom:24px">
+      AI is not going to replace all jobs. It is going to transform most of them. Here's what that looks like across fields students commonly explore — and the skills that will matter regardless of what you choose.
+    </p>
+
+    <div class="career-grid">
+
+      <div class="career-card">
+        <div class="career-card__header">
+          <div class="career-card__emoji">⚕️</div>
+          <div class="career-card__field">Healthcare & Medicine</div>
+        </div>
+        <div class="career-card__body">
+          <div class="career-card__now">
+            <strong>Today</strong>
+            AI reads X-rays, flags potential diagnoses, and drafts clinical notes. Doctors still decide. Empathy, judgment, and patient communication remain deeply human.
+          </div>
+          <div class="career-card__future">
+            <strong>5–10 years out</strong>
+            AI will co-pilot most diagnostics. Doctors who use AI tools will see far more patients. Those who don't will be less competitive. New roles: AI clinical auditor, health data ethicist.
+          </div>
+          <div>
+            <span class="career-card__skill">AI literacy</span>
+            <span class="career-card__skill">Data interpretation</span>
+            <span class="career-card__skill">Ethics reasoning</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="career-card">
+        <div class="career-card__header">
+          <div class="career-card__emoji">⚖️</div>
+          <div class="career-card__field">Law & Policy</div>
+        </div>
+        <div class="career-card__body">
+          <div class="career-card__now">
+            <strong>Today</strong>
+            AI drafts contracts, reviews documents, and researches case law faster than any paralegal. Junior legal work is already being reduced. Argument and judgment still require humans.
+          </div>
+          <div class="career-card__future">
+            <strong>5–10 years out</strong>
+            Lawyers will use AI as a constant research and drafting partner. New specialties are emerging: AI regulatory law, algorithmic bias litigation, data rights. High demand for people who understand both law and technology.
+          </div>
+          <div>
+            <span class="career-card__skill">Critical thinking</span>
+            <span class="career-card__skill">Regulatory literacy</span>
+            <span class="career-card__skill">AI policy knowledge</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="career-card">
+        <div class="career-card__header">
+          <div class="career-card__emoji">🎨</div>
+          <div class="career-card__field">Art, Design & Media</div>
+        </div>
+        <div class="career-card__body">
+          <div class="career-card__now">
+            <strong>Today</strong>
+            AI generates images, music, and video. Some entry-level design work (stock art, simple ads) is being replaced. Original creative direction and human storytelling still differentiate work.
+          </div>
+          <div class="career-card__future">
+            <strong>5–10 years out</strong>
+            "AI art director" — someone who orchestrates AI tools to produce creative output — will be a core role. Authenticity, cultural context, and emotional resonance will be premium values as AI output proliferates.
+          </div>
+          <div>
+            <span class="career-card__skill">Visual communication</span>
+            <span class="career-card__skill">AI prompt design</span>
+            <span class="career-card__skill">Brand storytelling</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="career-card">
+        <div class="career-card__header">
+          <div class="career-card__emoji">💻</div>
+          <div class="career-card__field">Technology & Engineering</div>
+        </div>
+        <div class="career-card__body">
+          <div class="career-card__now">
+            <strong>Today</strong>
+            AI writes, debugs, and explains code. Junior coding tasks are shrinking. Developers who use AI tools are dramatically more productive than those who don't.
+          </div>
+          <div class="career-card__future">
+            <strong>5–10 years out</strong>
+            "Vibe coding" — describing what you want and having AI build it — will be mainstream. The premium skills will be architecture, systems thinking, security, and AI evaluation. Non-coders who can direct AI to build things will emerge as a new class of builder.
+          </div>
+          <div>
+            <span class="career-card__skill">Systems design</span>
+            <span class="career-card__skill">Prompt engineering</span>
+            <span class="career-card__skill">AI evaluation</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="career-card">
+        <div class="career-card__header">
+          <div class="career-card__emoji">📚</div>
+          <div class="career-card__field">Education & Research</div>
+        </div>
+        <div class="career-card__body">
+          <div class="career-card__now">
+            <strong>Today</strong>
+            AI tutors, grades essays, and synthesizes research. Teachers are navigating how to keep assessment meaningful. Research summaries and literature reviews are being transformed.
+          </div>
+          <div class="career-card__future">
+            <strong>5–10 years out</strong>
+            Personalized AI tutoring at scale will change what teachers do — less lecture, more mentoring and facilitation. Researchers who use AI to process and synthesize information will cover ground orders of magnitude faster than those who don't.
+          </div>
+          <div>
+            <span class="career-card__skill">Curriculum design</span>
+            <span class="career-card__skill">Research methodology</span>
+            <span class="career-card__skill">AI-assisted analysis</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="career-card">
+        <div class="career-card__header">
+          <div class="career-card__emoji">💼</div>
+          <div class="career-card__field">Business & Entrepreneurship</div>
+        </div>
+        <div class="career-card__body">
+          <div class="career-card__now">
+            <strong>Today</strong>
+            AI writes marketing copy, analyzes sales data, runs customer service, and drafts business plans. One person with AI tools can do the work of a small team.
+          </div>
+          <div class="career-card__future">
+            <strong>5–10 years out</strong>
+            "Solo founder + AI stack" will be a common and competitive business model. Operations, finance analysis, customer support, and content production will be largely AI-augmented. Human skills: vision, relationships, and novel judgment will have premium value.
+          </div>
+          <div>
+            <span class="career-card__skill">Strategic thinking</span>
+            <span class="career-card__skill">AI tool fluency</span>
+            <span class="career-card__skill">Human relationship skills</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ──────────────────────────────────────────
+     SECTION 5 — 5–10 Year Outlook
+     ────────────────────────────────────────── -->
+<section class="section section--white" id="future" aria-labelledby="s5-title">
+  <div class="container">
+    <div class="guide-step">
+      <div class="guide-step__num">5</div>
+      <h2 class="guide-step__title" id="s5-title">The 5–10 year outlook: what's coming</h2>
+    </div>
+
+    <p style="font-size:15px;line-height:1.75;color:var(--color-text-muted);margin-bottom:28px">
+      You'll be entering the workforce or your junior/senior year of college right when these shifts hit hardest. Here's what the next decade looks like, based on where AI is today.
+    </p>
+
+    <!-- Infographic: Timeline -->
+    <div class="infographic" aria-label="AI development timeline infographic">
+      <svg viewBox="0 0 720 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Timeline showing AI development milestones from 2025 to 2035">
+        <rect width="720" height="380" fill="#0F1923"/>
+
+        <!-- Timeline line -->
+        <line x1="60" y1="190" x2="660" y2="190" stroke="#2a3a4a" stroke-width="2"/>
+
+        <!-- Arrow -->
+        <polygon points="660,184 672,190 660,196" fill="#EF9F27"/>
+
+        <!-- Year labels -->
+        <text x="60" y="218" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="rgba(255,255,255,0.5)">2025</text>
+        <text x="210" y="218" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="rgba(255,255,255,0.5)">2027</text>
+        <text x="360" y="218" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="rgba(255,255,255,0.5)">2029</text>
+        <text x="510" y="218" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="rgba(255,255,255,0.5)">2031</text>
+        <text x="640" y="218" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="rgba(255,255,255,0.5)">2034+</text>
+
+        <!-- Tick marks -->
+        <line x1="60" y1="186" x2="60" y2="194" stroke="#2a3a4a" stroke-width="1.5"/>
+        <line x1="210" y1="186" x2="210" y2="194" stroke="#2a3a4a" stroke-width="1.5"/>
+        <line x1="360" y1="186" x2="360" y2="194" stroke="#2a3a4a" stroke-width="1.5"/>
+        <line x1="510" y1="186" x2="510" y2="194" stroke="#2a3a4a" stroke-width="1.5"/>
+        <line x1="640" y1="186" x2="640" y2="194" stroke="#2a3a4a" stroke-width="1.5"/>
+
+        <!-- ── Event 1: Now ── -->
+        <circle cx="60" cy="190" r="7" fill="#EF9F27"/>
+        <rect x="20" y="80" width="160" height="90" rx="8" fill="#192534" stroke="rgba(239,159,39,0.3)" stroke-width="1"/>
+        <text x="100" y="100" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#EF9F27">You are here</text>
+        <text x="100" y="118" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.75)">AI writes, codes, reasons.</text>
+        <text x="100" y="133" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.75)">AI in most major tools.</text>
+        <text x="100" y="148" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.75)">Rules still catching up.</text>
+        <text x="100" y="163" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.6)">Early adopters winning.</text>
+        <line x1="60" y1="183" x2="100" y2="170" stroke="rgba(239,159,39,0.4)" stroke-width="1" stroke-dasharray="3,2"/>
+
+        <!-- ── Event 2: 2027 ── -->
+        <circle cx="210" cy="190" r="7" fill="#EF9F27" opacity="0.8"/>
+        <rect x="138" y="234" width="148" height="90" rx="8" fill="#192534" stroke="rgba(239,159,39,0.2)" stroke-width="1"/>
+        <text x="212" y="254" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#EF9F27">~2027: College entry</text>
+        <text x="212" y="272" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.75)">AI agents handle tasks</text>
+        <text x="212" y="287" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.75)">end-to-end. AI classmates</text>
+        <text x="212" y="302" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.75)">will be universal. Profs</text>
+        <text x="212" y="317" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.6)">will rewrite assessments.</text>
+        <line x1="210" y1="197" x2="210" y2="234" stroke="rgba(239,159,39,0.4)" stroke-width="1" stroke-dasharray="3,2"/>
+
+        <!-- ── Event 3: 2029 ── -->
+        <circle cx="360" cy="190" r="7" fill="#EF9F27" opacity="0.7"/>
+        <rect x="288" y="80" width="148" height="90" rx="8" fill="#192534" stroke="rgba(239,159,39,0.2)" stroke-width="1"/>
+        <text x="362" y="100" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#EF9F27">~2029: Internships</text>
+        <text x="362" y="118" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.75)">AI fluency expected</text>
+        <text x="362" y="133" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.75)">by employers. Entry-level</text>
+        <text x="362" y="148" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.75)">roles shrink. Hybrids rise:</text>
+        <text x="362" y="163" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.6)">"AI + [your field]" wins.</text>
+        <line x1="360" y1="183" x2="360" y2="170" stroke="rgba(239,159,39,0.4)" stroke-width="1" stroke-dasharray="3,2"/>
+
+        <!-- ── Event 4: 2031 ── -->
+        <circle cx="510" cy="190" r="7" fill="#EF9F27" opacity="0.6"/>
+        <rect x="436" y="234" width="148" height="90" rx="8" fill="#192534" stroke="rgba(239,159,39,0.2)" stroke-width="1"/>
+        <text x="510" y="254" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#EF9F27">~2031: First job</text>
+        <text x="510" y="272" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.75)">AI as co-worker is</text>
+        <text x="510" y="287" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.75)">normal. Roles that</text>
+        <text x="510" y="302" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.75)">leverage AI output</text>
+        <text x="510" y="317" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.6)">will dominate hiring.</text>
+        <line x1="510" y1="197" x2="510" y2="234" stroke="rgba(239,159,39,0.4)" stroke-width="1" stroke-dasharray="3,2"/>
+
+        <!-- ── Event 5: 2034+ ── -->
+        <circle cx="640" cy="190" r="7" fill="#EF9F27" opacity="0.5"/>
+        <rect x="558" y="80" width="148" height="100" rx="8" fill="#192534" stroke="rgba(239,159,39,0.15)" stroke-width="1"/>
+        <text x="632" y="100" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#EF9F27">2034+: Uncertain</text>
+        <text x="632" y="118" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.75)">Truly autonomous AI</text>
+        <text x="632" y="133" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.75)">agents possible. Major</text>
+        <text x="632" y="148" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.75)">regulatory shifts likely.</text>
+        <text x="632" y="163" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.6)">New job categories</text>
+        <text x="632" y="178" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.5)">we can't name yet.</text>
+        <line x1="640" y1="183" x2="640" y2="180" stroke="rgba(239,159,39,0.3)" stroke-width="1" stroke-dasharray="3,2"/>
+
+        <!-- "You are here" marker -->
+        <text x="61" y="202" font-family="system-ui,sans-serif" font-size="8" fill="rgba(239,159,39,0.8)" transform="rotate(-60,61,202)">↑ now</text>
+      </svg>
+    </div>
+
+    <div class="info-box info-box--dark">
+      <div class="info-box__label">What this means for you</div>
+      <p style="color:rgba(255,255,255,0.85)">The students entering the workforce in 2030–2033 who started building AI fluency in high school will have a 4–5 year head start over peers who ignored it. <strong style="color:var(--color-amber)">The goal isn't to predict the future exactly — it's to stay curious, adaptable, and informed as things change.</strong> Those are skills AI still can't replicate.</p>
+    </div>
+
+    <h3 style="font-size:17px;font-weight:700;color:var(--color-text);margin:28px 0 16px">Skills that will matter regardless of what AI does</h3>
+
+    <div class="callout-grid">
+      <div class="callout-card">
+        <div class="callout-card__icon">🤔</div>
+        <h4>Critical thinking</h4>
+        <p>AI generates plausible-sounding answers. Knowing when those answers are wrong, biased, or incomplete is a skill AI cannot do for you — and employers will prize it.</p>
+      </div>
+      <div class="callout-card">
+        <div class="callout-card__icon">🗣️</div>
+        <h4>Communication</h4>
+        <p>Writing clearly, speaking persuasively, and adapting to an audience will remain high-value. AI can draft; it can't replace your presence, credibility, or judgment in a room.</p>
+      </div>
+      <div class="callout-card">
+        <div class="callout-card__icon">🔗</div>
+        <h4>Relationships</h4>
+        <p>Trust, empathy, and collaboration are deeply human. The ability to build and sustain real relationships — with clients, colleagues, patients, students — is irreplaceable.</p>
+      </div>
+      <div class="callout-card">
+        <div class="callout-card__icon">🧭</div>
+        <h4>Ethical judgment</h4>
+        <p>AI can optimize for a goal. Deciding what goals are worth pursuing — and who bears the costs — requires human values. Ethics fluency will increasingly differentiate leaders.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ──────────────────────────────────────────
+     SECTION 6 — Start Today
+     ────────────────────────────────────────── -->
+<section class="section section--surface" id="start-today" aria-labelledby="s6-title">
+  <div class="container">
+    <div class="guide-step">
+      <div class="guide-step__num">6</div>
+      <h2 class="guide-step__title" id="s6-title">Start today: a 30-day on-ramp</h2>
+    </div>
+
+    <p style="font-size:15px;line-height:1.75;color:var(--color-text-muted);margin-bottom:24px">
+      You don't need a class or a certificate. You need 15 minutes a day and a willingness to experiment. Here's a simple on-ramp.
+    </p>
+
+    <ul class="tip-list">
+      <li>
+        <span class="tip-list__icon">📅</span>
+        <div><strong>Week 1 — Just start chatting about things you actually care about.</strong> Pick a topic you care about — climate, sports, music, a career path, something in the news — and go deep with AI. Ask follow-up after follow-up. Notice what kinds of prompts get you richer, more specific answers versus generic ones.</div>
+      </li>
+      <li>
+        <span class="tip-list__icon">🌍</span>
+        <div><strong>Week 2 — Investigate AI's environmental impact.</strong> Use everything from Section 2: paste in an article, ask for both sides of the debate, compare AI's footprint to other parts of your digital life. Practice loading your context window with specifics. This is a live controversy — form your own view.</div>
+      </li>
+      <li>
+        <span class="tip-list__icon">🔍</span>
+        <div><strong>Week 3 — Research something you care about.</strong> Pick a topic — a career, a current event, a book you like — and have a deep conversation with an AI about it. Ask it to give you multiple perspectives. Ask what it might be getting wrong. Test its answers.</div>
+      </li>
+      <li>
+        <span class="tip-list__icon">🛠️</span>
+        <div><strong>Week 4 — Try something creative.</strong> Ask AI to help you make something: a short story, a business idea, a mock design brief, a pitch for something you care about. See where it adds real value and where it falls flat.</div>
+      </li>
+      <li>
+        <span class="tip-list__icon">🎯</span>
+        <div><strong>After month one — go deeper in your field.</strong> Ask AI to explain what's changing in the career you're considering. Ask it to recommend skills to develop, people to look up, and questions to think about. Let your curiosity lead.</div>
+      </li>
+    </ul>
+
+    <div class="info-box">
+      <div class="info-box__label">Free tools to start with</div>
+      <p><strong>claude.ai</strong> — Anthropic's AI, strong for writing, reasoning, and nuanced topics. <strong>chatgpt.com</strong> — OpenAI's AI, broad capability, large user community. <strong>perplexity.ai</strong> — AI + search citations, good for research. All have free tiers. You don't need a paid plan to start.</p>
+    </div>
+
+    <!-- Final CTA bar -->
+    <div class="action-bar" role="complementary" aria-label="Take action" style="margin-top:32px">
+      <span class="action-bar__label">Take action</span>
+      <div class="action-bar__divider"></div>
+      <span class="action-bar__text">Stay informed on AI policy — laws shaping AI will shape your future too</span>
+      <a href="policy-watch.html" class="action-bar__cta">Follow the bills →</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Newsletter ── -->
+<section class="newsletter" id="newsletter" aria-label="Newsletter signup">
+  <div class="container">
+    <h2 class="newsletter__title">Get the Brief every morning</h2>
+    <p class="newsletter__sub">5 minutes. Plain language. What AI means for you — today.</p>
+    <form class="newsletter__form" action="#" method="post" aria-label="Email signup form">
+      <input class="newsletter__input" type="email" name="email" placeholder="your@email.com" required aria-label="Your email address">
+      <button type="submit" class="btn btn--amber">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer class="footer" role="contentinfo">
+  <span class="footer__note">voxpopulai.org — nonprofit · independent · no AI corporate funding</span>
+  <nav class="footer__links" aria-label="Footer navigation">
+    <a href="about.html">About</a>
+    <a href="editorial-policy.html">Editorial policy</a>
+    <a href="how-we-source.html">How we source</a>
+    <a href="corrections.html">Corrections</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
